@@ -1,0 +1,13 @@
+{%extends 'admin/base.html'%}
+
+{% block head %}
+    {{ super() }}
+
+    <!-- XÓA Bootstrap gốc nếu muốn -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
+
+    <!-- CSS mới của bạn -->
+    {% block extra_css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/admin_home.css') }}">
+    {% endblock %}
+{% endblock %}

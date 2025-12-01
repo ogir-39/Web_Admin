@@ -1,0 +1,140 @@
+{%extends 'admin/master.html'%}
+
+{#
+    {%if current_user.is_authenticated%}
+    Chào {{current_user.name}}!
+    {%else%}
+    {% if err_msg%}
+    <div class="alert alert-danger">{{err_msg}}</div>
+    {% endif %}
+#}
+
+{%block content_main%}
+{#
+    <form method="post" action="/login-admin" class="form-control">
+        <div class="form-group mb-3 mt-3">
+            <label for="username">Tài khoản</label>
+            <input type="text" class="form-control" id="username" placeholder="Nhập tài khoản" name="username">
+
+        </div>
+
+        <div class="form-group mt-3 mb-3">
+            <label for="password">Mật khẩu</label>
+            <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" name="password">
+
+        </div>
+
+         <div class="form-group mt-3 mb-3">
+             <button class="btn btn-primary" type="submit">ĐĂNG NHẬP</button>
+         </div>
+    </form>
+#}
+    <div class="content-header">
+        <p>Trang chủ /</p>
+        <p>Chào mừng đến với trang Admin!</p>
+    </div>
+    <div class="content-body">
+        <div class="tmp">
+            <div>
+                <div class="tmp-sup">
+                    <div class="tmp-body">
+                        <div>
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>học viên</p>
+                        </div>
+                    </div>
+                    <div class="tmp-body">
+                        <p>2000</p>
+                    </div>
+                </div>
+                <div class="tmp-footer">
+
+                </div>
+            </div>
+            <div>
+                <div class="tmp-sup">
+                    <div class="tmp-body">
+                        <div>
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>học viên</p>
+                        </div>
+                    </div>
+                    <div class="tmp-body">
+                        <p>2000</p>
+                    </div>
+                </div>
+                <div class="tmp-footer">
+
+                </div>
+            </div>
+            <div>
+                <div class="tmp-sup">
+                    <div class="tmp-body">
+                        <div>
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>học viên</p>
+                        </div>
+                    </div>
+                    <div class="tmp-body">
+                        <p>2000</p>
+                    </div>
+                </div>
+                <div class="tmp-footer">
+
+                </div>
+            </div>
+            <div>
+                <div class="tmp-sup">
+                    <div class="tmp-body">
+                        <div>
+                            <i class="fa fa-user-o"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>học viên</p>
+                        </div>
+                    </div>
+                    <div class="tmp-body">
+                        <p>2000</p>
+                    </div>
+                </div>
+                <div class="tmp-footer">
+
+                </div>
+            </div>
+        </div>
+        <div class="tmp2">
+            <div>
+                <div class="img">
+                    <p>hi</p>
+                </div>
+            </div>
+            <div class="tmp2-info">
+                <ul>
+                    <li>Họ tên</li>
+                    <li>Mã nhân viên</li>
+                    <li>Ngày sinh</li>
+                    <li>Mail</li>
+                </ul>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+                <ul>
+                    <li>Họ tên</li>
+                    <li>Mã nhân viên</li>
+                    <li>Ngày sinh</li>
+                    <li>Mail</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{%endblock%}

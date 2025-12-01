@@ -1,0 +1,227 @@
+:root {
+    --xam: rgb(77,81,84);
+}
+
+/*BODY*/
+body {
+    background-color: whitesmoke !important;
+    color: black;
+}
+
+/*SIDE BAR*/
+
+
+.side-bar {
+    width: 270px;
+    height: 100vh;
+    align-items: start;
+    padding: 1rem;
+    background-color: white;
+    border-right: 1px solid lightgray;
+}
+
+.navbar-brand {
+    color: black !important;
+}
+
+#main-sidebar {
+    padding:0;
+    background-color: transparent !important;
+}
+
+.navbar-nav {
+    width: 100%;
+}
+
+.navbar-nav .nav-link {
+    color: var(--xam) !important;
+}
+
+.dropdown .dropdown-menu {
+    /* Loại bỏ viền, nền trắng của dropdown */
+    position: static !important; /* Quan trọng: Giữ nó trong luồng sidebar */
+    display: block !important;    /* Quan trọng: Luôn hiển thị (không ẩn/xổ xuống) */
+    background-color: transparent !important; /* Nền trong suốt để thấy sidebar */
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0;
+    margin: 0;
+    float: none !important;
+    width: auto !important;
+}
+
+.dropdown .dropdown-item {
+    color: var(--xam);
+}
+
+.dropdown .dropdown-item::after {
+    color: black !important;
+}
+
+.dropdown .dropdown-item:hover {
+    background-color: #0f5132;
+}
+
+.dropdown .dropdown-toggle::after{
+    display: none !important;
+}
+
+/*CONTENT NAVBAR*/
+.content .navbar {
+    height: 2rem;
+    align-content: center;
+    box-sizing: content-box;
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+}
+
+.navbar-content {
+    list-style-type: none !important;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    padding: 0;
+}
+
+.navbar .nav-link {
+    padding-left: 0;
+    color: lightgray;
+}
+
+.navbar .nav-link:hover {
+    color: gray;
+}
+
+/*CONTENT_MAIN*/
+.content-main {
+    margin: 0;
+    padding: 1rem;
+}
+form.form-control {
+    height: fit-content;
+}
+
+.content-main .form-group {
+    margin: 1rem !important;
+}
+
+.content-header p{
+    margin-bottom: 0.2rem;
+    color: var(--xam);
+}
+
+.content-header p:nth-child(2){
+    font-size: 20px;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px solid lightgray;
+    margin-bottom: 0.5rem;
+}
+
+.content-body {
+    display: flex;
+}
+/*CONTENT TMP*/
+.tmp {
+    width: 50%;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tmp-sup {
+    justify-content: space-around;
+    display: flex;
+    background-color: white;
+    padding: 1rem;
+    margin: 1rem;
+    margin-bottom: 0;
+    box-sizing: border-box;
+    border-radius: 1rem 1rem 0 0;
+    flex-wrap: wrap;
+}
+
+.tmp > div {
+    box-sizing: border-box;
+    width: 50%;
+}
+
+.tmp-body {
+    background-color: white;
+    padding: 0.5rem;
+    align-content: center;
+}
+
+.tmp-body p {
+    margin: 0;
+    color: var(--xam);
+}
+
+.tmp-body > p {
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+}
+
+.tmp-body > div {
+    justify-self: center;
+}
+
+.tmp-body > div i {
+    padding: 0.5rem;
+    color: var(--xam);
+}
+
+.tmp-footer {
+    background-color: #0dcaf0;
+    height: 1.5rem;
+    margin: 0 1rem 1rem 1rem;
+    border-radius: 0 0 1rem 1rem;
+}
+
+/*CONTENT TMP2*/
+.tmp2 {
+    width: 50%;
+    display: flex;
+    height: fit-content;
+    padding: 1rem;
+    background-color: white;
+    margin: 1rem;
+    border-radius: 1rem;
+}
+
+.tmp2 div:first-child {
+    width: 30%;
+    min-width: 150px;
+    height: 200px;
+    border:1px solid lightgray;
+    border-radius: 1rem;
+    justify-items: center;
+    align-content: center;
+}
+
+.tmp2 > div {
+    margin: 1rem;
+}
+
+.tmp2-info {
+    width: 70%;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.tmp2-info ul:first-child {
+    padding: 0;
+}
+
+.tmp2-info ul {
+    height: fit-content;
+    margin: 0;
+}
+
+.tmp2-info li {
+    list-style-type: none;
+    padding: 0 0 1rem 0;
+}

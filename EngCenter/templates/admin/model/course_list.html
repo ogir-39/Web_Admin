@@ -1,0 +1,15 @@
+{% extends 'admin/list.html' %}
+{# Bạn phải kế thừa master.html để sử dụng các blocks như content_main #}
+
+{% block page_body %}
+    <div class="custom-card-wrapper">
+
+        <p>hihihi</p>
+
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+    {# Phải gọi super() ở đây để các script của List View được tải #}
+    {{ super() }}
+{% endblock %}
