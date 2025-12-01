@@ -92,6 +92,8 @@
 
         </div>
 
+        {% block body %}{% endblock %}
+
         {% block messages %}
             {{ layout.messages() }}
         {% endblock %}
