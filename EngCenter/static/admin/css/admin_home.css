@@ -76,11 +76,11 @@ p, li, a {
     color: white;
 }
 
-.dropdown-toggle{
+.navbar-nav .dropdown-toggle{
     color: #545e68 !important;
 }
 
-.dropdown .dropdown-menu {
+.navbar-nav .dropdown .dropdown-menu {
     /* Loại bỏ viền, nền trắng của dropdown */
     position: static !important; /* Quan trọng: Giữ nó trong luồng sidebar */
     display: block !important;    /* Quan trọng: Luôn hiển thị (không ẩn/xổ xuống) */
@@ -93,21 +93,17 @@ p, li, a {
     width: auto !important;
 }
 
-.dropdown .dropdown-item {
+.navbar-nav .dropdown .dropdown-item {
     color: white;
 }
 
-.dropdown .dropdown-item::after {
+.navbar-nav .dropdown .dropdown-item::after {
     color: black !important;
 }
 
-.dropdown .dropdown-item:hover {
+.navbar-nav .dropdown .dropdown-item:hover {
     background-color: var(--xanhbien);
 }
-
-/*.dropdown .dropdown-toggle::after{*/
-/*    display: none !important;*/
-/*}*/
 
 /*content*/
 .content {

@@ -13,17 +13,18 @@ class MyAdminIndexView(AdminIndexView):
     pass
 
 class CourseView(ModelView):
-    list_template = 'admin/model/course_list.html'
-    create_template = 'admin/model/course_create.html'
+    list_template = 'admin/model/list.html'
+    create_template = 'admin/model/create.html'
+    extra_css = ['css/list.css']
 
 class UserView(ModelView):
-    list_template = 'admin/model/course_list.html'
+    list_template = 'admin/model/list.html'
 
 class BillView(ModelView):
-    list_template = 'admin/model/course_list.html'
+    list_template = 'admin/model/list.html'
 
 class EnrollmentView(ModelView):
-    list_template = 'admin/model/course_list.html'
+    list_template = 'admin/model/list.html'
 
 admin = Admin(app=app, theme=Bootstrap4Theme())
 
