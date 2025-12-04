@@ -1,0 +1,13 @@
+.nav-tabs {
+    border-bottom: 0;
+}
+
+.nav-tabs .nav-link {
+    background-color: lightgray;
+    color: dimgrey;
+    border-radius: 0.6rem 0.6rem 0 0;
+}
+
+.nav-tabs .nav-item {
+
+}

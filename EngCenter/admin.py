@@ -15,7 +15,9 @@ class MyAdminIndexView(AdminIndexView):
 class CourseView(ModelView):
     list_template = 'admin/model/list.html'
     create_template = 'admin/model/create.html'
-    extra_css = ['css/list.css']
+    edit_template = 'admin/model/edit.html'
+    delete_template = 'admin/model/delete.html'
+    extra_css = ['/static/admin/css/model_view.css']
 
 class UserView(ModelView):
     list_template = 'admin/model/list.html'
