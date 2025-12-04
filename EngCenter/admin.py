@@ -6,7 +6,7 @@ from flask_admin.theme import Bootstrap4Theme
 from flask_login import current_user, logout_user
 
 from EngCenter import db, app
-from EngCenter.models.models import Course, User, Bill, Enrollment
+from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom
 
 
 class MyAdminIndexView(AdminIndexView):
@@ -43,6 +43,9 @@ class UserView(SharedView):
         'type' : 'Vai trò'
     }
 
+class ClassView(SharedView):
+    pass
+
 class BillView(SharedView):
     pass
 
@@ -54,8 +57,9 @@ admin = Admin(app=app, theme=Bootstrap4Theme())
 
 category_QLDuLieu= 'Quản lý dữ liệu'
 
-admin.add_view(CourseView(Course, db.session,category=category_QLDuLieu,name="Khoá học"))
+admin.add_view(CourseView(Course, db.session,category=category_QLDuLieu,name="Khoá học", endpoint='course'))
 admin.add_view(UserView(User, db.session,category=category_QLDuLieu,name="Tài khoản"))
+admin.add_view(ClassView(Classroom,db.session,category=category_QLDuLieu,name="Lớp học"))
 
 category_ThongKe= 'Thống kê'
 
