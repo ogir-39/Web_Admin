@@ -2,3 +2,38 @@ label {
     color: blue;
 }
 
+.table-responsive {
+    background-color: white;
+    border-top: 1px solid lightgray;
+    border-radius: 0 1rem 1rem 1rem;
+}
+
+.table-striped {
+    margin: 0;
+}
+
+.fa-pencil {
+    color: darkred;
+}
+
+.fa-trash {
+    color: gray;
+}
+
+thead th {
+    align-content: center;
+    text-align: center;
+}
+
+.pagination {
+    width: 100% !important;
+    padding: 1rem;
+}
+
+.pagination li:active {
+    background-color: var(--xanhbien);
+}
+
+td.col-status, td.col-gender {
+    text-align: center;
+}

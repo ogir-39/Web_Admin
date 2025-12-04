@@ -1,9 +1,60 @@
 label {
-    color: red;
+    color: black;
+    font-weight: bold;
 }
 
 .admin-form {
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 0 1rem 1rem 1rem;
+}
+
+.admin-form fieldset {
+    position:  relative;
+}
+
+.admin-form .form-group {
+    width: 75%;
+    margin: 0 !important;
+    box-sizing: border-box;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-bottom: 0;
+}
+
+.admin-form .form-group:nth-child(6) {
+    padding-bottom: 2rem;
+}
+
+.admin-form .form-group:last-child {
+    width: 25%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    align-items: flex-end;
+}
+
+.admin-form .form-group:last-child > div {
+    display: flex;
+    position: absolute;
+    right: 0;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-right: 2rem;
+    box-sizing: border-box;
+    max-width: fit-content;
+    width: 100%;
+    right: 0;
+}
+
+.admin-form .form-group:last-child input, .admin-form .form-group:last-child a{
+    width: 100%;
+    margin: 0.2rem;
+    flex-wrap: wrap;
+    height: fit-content;
+    white-space: normal;
+}
+
+hr {
+    display: none;
 }

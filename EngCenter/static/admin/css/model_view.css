@@ -6,8 +6,15 @@
     background-color: lightgray;
     color: dimgrey;
     border-radius: 0.6rem 0.6rem 0 0;
+    border: 1px solid lightgray;
 }
 
-.nav-tabs .nav-item {
+.nav-tabs .nav-link:active {
+    border: 1px solid lightgray;
+}
 
+@media screen and (max-width: 992px) {
+    .side-bar {
+        width: 100px !important;
+    }
 }
