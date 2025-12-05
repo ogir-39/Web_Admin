@@ -25,6 +25,10 @@ thead th {
     text-align: center;
 }
 
+thead th a {
+    color: black;
+}
+
 .pagination {
     width: 100% !important;
     padding: 1rem;

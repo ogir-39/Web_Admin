@@ -458,7 +458,7 @@ form.form-control {
     box-sizing: border-box;
     padding: 1rem;
     font-size: 17px;
-    color: white;
+    font-weight: bold;
 }
 
 .access button span:first-child{
@@ -469,24 +469,42 @@ form.form-control {
 .access button span:last-child{
     width: 70%;
     text-align: left;
-    font-weight: bold;
 
 }
 
 .btn-create-course {
-    background-color: #0ec036;
+    background-color: #96dea6a1;
 }
+
+.btn-create-course span {
+    color: #11892b;
+}
+
 
 .btn-create-class {
-    background-color: #0c91df;
+    background-color: #a8e1ffde
 }
+
+.btn-create-class span{
+    color: #2988c2;
+}
+
 
 .btn-create-user {
-    background-color: #e22d2d;
+    background-color: #ffbabac9;
 }
 
+.btn-create-user span{
+    color: #a54040;
+}
+
+
 .btn-noti {
-    background-color: #e46e0e;
+    background-color: #ffc799c4;
+}
+
+.btn-noti span{
+    color: #c66516;
 }
 
 .access div p {
