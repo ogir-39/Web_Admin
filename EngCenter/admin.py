@@ -28,22 +28,20 @@ def get_model_name(view, context, model, name):
 def get_total_revenue():
     """Tính tổng doanh thu từ Bill ở trạng thái PAID."""
 
-    # Chúng ta cần tham gia 4 bảng: Bill -> Enrollment -> Classroom -> Course
-    # và chỉ lấy Bill có trạng thái PAID
-
     total_revenue = db.session.query(
-        func.sum(Course.fee)  # Tổng hợp cột fee từ Course
+        func.sum(Course.fee)
     ).select_from(Bill).join(
-        Enrollment, Bill.enrollment_id == Enrollment.id  # 1. Bill -> Enrollment
+        Enrollment, Bill.enrollment_id == Enrollment.id
     ).join(
-        Classroom, Enrollment.class_id == Classroom.id  # 2. Enrollment -> Classroom
+        Classroom, Enrollment.class_id == Classroom.id
     ).join(
-        Course, Classroom.course_id == Course.id  # 3. Classroom -> Course
+        Course, Classroom.course_id == Course.id
     ).filter(
-        Bill.status == BillEnum.PAID  # 4. Lọc Bill đã thanh toán
-    ).scalar()  # Lấy giá trị tổng duy nhất
-
-    # Trả về 0 nếu kết quả là None (chưa có doanh thu)
+        # Đảm bảo bạn sử dụng tham chiếu Enum đúng
+        Bill.status == BillEnum.PAID
+    ).scalar()
+    # ✅ Fix NULL: Đảm bảo trả về 0 nếu kết quả là None (không có doanh thu) ✅
+    # Việc này ngăn lỗi định dạng số hoặc hiển thị trống.
     return total_revenue if total_revenue is not None else 0
 
 class DashboardView(BaseView):
@@ -60,18 +58,15 @@ class DashboardView(BaseView):
         create_class_url = url_for('classroom.create_view')
         return self.render('index.html', create_class_url=create_class_url)
 
-    def index(self):
-        # 🎯 Tính toán tổng doanh thu
-        revenue = get_total_revenue()
-
-        # Định dạng tiền tệ (tùy chọn)
-        revenue_display = "{:,.0f}".format(revenue)
-
-        # Truyền vào template
-        return self.render('index.html', total_revenue=revenue_display)
 
 class MyAdminIndexView(AdminIndexView):
-    pass
+    @expose('/')
+    def index(self):
+        # 1. Tính toán và định dạng doanh thu
+        revenue = get_total_revenue()
+        revenue_display = "{:,.0f}".format(revenue) if revenue is not None else "0"
+
+        return self.render('index.html',total_revenue=revenue_display)
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'

@@ -41,3 +41,12 @@ thead th a {
 td.col-status, td.col-gender, .col-end_date, .col-start_date, .col-max_student {
     text-align: center;
 }
+
+.form-inline .form-control, .form-inline .btn {
+    border-radius: 1rem;
+}
+
+div.form-inline {
+    box-sizing: border-box;
+    height: 2rem;
+}
