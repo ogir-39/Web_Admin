@@ -36,6 +36,8 @@
     <div class="content-body">
         <div class="statistic">
             <div>
+                <div class="statistic-header">
+                </div>
                 <div class="statistic-body">
                     <div class="statistic-content">
                         <div>
@@ -58,6 +60,8 @@
                 </div>
             </div>
             <div>
+                <div class="statistic-header">
+                </div>
                 <div class="statistic-body">
                     <div class="statistic-content">
                         <div>
@@ -80,6 +84,8 @@
                 </div>
             </div>
             <div>
+                <div class="statistic-header">
+                </div>
                 <div class="statistic-body">
                     <div class="statistic-content">
                         <div>
@@ -102,6 +108,8 @@
                 </div>
             </div>
             <div>
+                <div class="statistic-header">
+                </div>
                 <div class="statistic-body">
                     <div class="statistic-content">
                         <div>
@@ -176,27 +184,27 @@
                     <p>Truy cập nhanh</p>
                     <div>
                         <div>
-                            <button class="btn-create-course" onclick="window.location.href='{{url.for(course.create_view)}}'">
-                                <p><i class="fa fa-user-o"></i></p>
-                                <p>Thêm khóa học</p>
+                            <button class="btn-create-course" onclick="window.location.href='{{ admin_view.get_url("course.create_view") }}'">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thêm khóa học</span>
                             </button>
                         </div>
                         <div>
-                            <button class="btn-create-class">
-                                <p><i class="fa fa-user-o"></i></p>
-                                <p>Thêm lớp học</p>
+                            <button class="btn-create-class" onclick="window.location.href='{{ admin_view.get_url("classroom.create_view") }}'">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thêm lớp học</span>
                             </button>
                         </div>
                         <div>
-                            <button class="btn-create-user">
-                                <p><i class="fa fa-user-o"></i></p>
-                                <p>Thêm tài khoản</p>
+                            <button class="btn-create-user" onclick="window.location.href='{{ admin_view.get_url("user.create_view") }}'">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thêm tài khoản</span>
                             </button>
                         </div>
                         <div>
                             <button class="btn-noti">
-                                <p><i class="fa fa-user-o"></i></p>
-                                <p>Thông báo</p>
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thông báo</span>
                             </button>
                         </div>
                     </div>

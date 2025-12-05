@@ -34,6 +34,6 @@ thead th {
     background-color: var(--xanhbien);
 }
 
-td.col-status, td.col-gender {
+td.col-status, td.col-gender, .col-end_date, .col-start_date, .col-max_student {
     text-align: center;
 }

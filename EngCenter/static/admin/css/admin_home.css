@@ -49,12 +49,11 @@ p, li, a {
 
 /*SIDE BAR*/
 .side-bar {
-    width: 270px;
+    min-width: 270px;
     min-height: 100vh;
     align-items: start;
     padding: 1rem;
     background-color: var(--xanhduong);
-    border-right: 1px solid lightgray;
 }
 
 .navbar-brand {
@@ -78,6 +77,10 @@ p, li, a {
     color: #545e68 !important;
 }
 
+.navbar-nav .dropdown-toggle::after{
+    display: none;
+}
+
 .navbar-nav .dropdown .dropdown-menu {
     /* Loại bỏ viền, nền trắng của dropdown */
     position: static !important; /* Quan trọng: Giữ nó trong luồng sidebar */
@@ -92,15 +95,16 @@ p, li, a {
 }
 
 .navbar-nav .dropdown .dropdown-item {
-    color: white;
+    color: #ffffffbf;
 }
 
-.navbar-nav .dropdown .dropdown-item::after {
-    color: black !important;
+#main-sidebar .dropdown-item:active {
+    color: white;
+    background-color: transparent !important;
 }
 
 .navbar-nav .dropdown .dropdown-item:hover {
-    background-color: var(--xanhbien);
+    background-color: var(--xam);
 }
 
 /*content*/
@@ -131,6 +135,10 @@ p, li, a {
 .navbar .nav-link {
     padding-left: 0;
     color: white;
+}
+
+.fa-list-ul {
+    display: none;
 }
 
 .navbar .nav-link:hover {
@@ -180,17 +188,18 @@ form.form-control {
     background-color: white;
     padding: 1rem;
     margin: 1rem;
-    margin-bottom: 0;
+    margin-top: 0;
     box-sizing: border-box;
-    border-radius: 1rem 1rem 0 0;
+    border-radius: 0 0 1rem 1rem;
     flex-wrap: wrap;
     border: 1px solid lightgray;
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .statistic > div {
     box-sizing: border-box;
     width: 25%;
+    min-width: 268px;
 }
 
 .statistic-content {
@@ -256,7 +265,17 @@ form.form-control {
     font-size: 1.5rem;
 }
 
+.statistic-header {
+    background-color: var(--do);
+    height: 1.5rem;
+    margin: 1rem 1rem 0 1rem;
+    border-radius: 1rem 1rem 0 0;
+    border: 1px solid lightgray;
+    border-bottom: 0;
+}
+
 .statistic-footer {
+    display: none;
     background-color: var(--do);
     height: 1.5rem;
     margin: 0 1rem 1rem 1rem;
@@ -428,22 +447,46 @@ form.form-control {
     border-radius: 1rem;
     justify-content: space-evenly;
     align-items: center;
+    border: 1px solid lightgray;
+}
+
+.access button:hover {
+    filter: brightness(90%);
+}
+
+.access button span{
+    box-sizing: border-box;
+    padding: 1rem;
+    font-size: 17px;
+    color: white;
+}
+
+.access button span:first-child{
+    width: 30%;
+    text-align: right;
+}
+
+.access button span:last-child{
+    width: 70%;
+    text-align: left;
+    font-weight: bold;
+
 }
 
 .btn-create-course {
-    background-color: #F1C40F;
+    background-color: #0ec036;
 }
 
 .btn-create-class {
-    background-color: #F1C40F;
+    background-color: #0c91df;
 }
 
 .btn-create-user {
-    background-color: #F1C40F;
+    background-color: #e22d2d;
 }
 
 .btn-noti {
-    background-color: #F1C40F;
+    background-color: #e46e0e;
 }
 
 .access div p {
