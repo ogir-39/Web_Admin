@@ -1,5 +1,226 @@
 {%extends 'admin/master.html'%}
 
+{#
+    {%if current_user.is_authenticated%}
+    Chào {{current_user.name}}!
+    {%else%}
+    {% if err_msg%}
+    <div class="alert alert-danger">{{err_msg}}</div>
+    {% endif %}
+#}
+
 {%block content_main%}
-    <p>hi</p>
+{#
+    <form method="post" action="/login-admin" class="form-control">
+        <div class="form-group mb-3 mt-3">
+            <label for="username">Tài khoản</label>
+            <input type="text" class="form-control" id="username" placeholder="Nhập tài khoản" name="username">
+
+        </div>
+
+        <div class="form-group mt-3 mb-3">
+            <label for="password">Mật khẩu</label>
+            <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" name="password">
+
+        </div>
+
+         <div class="form-group mt-3 mb-3">
+             <button class="btn btn-primary" type="submit">ĐĂNG NHẬP</button>
+         </div>
+    </form>
+#}
+    <div class="content-header">
+        <p>Trang chủ /</p>
+        <p>Chào mừng đến với trang Admin!</p>
+    </div>
+    <div class="content-body">
+        <div class="statistic">
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="statistic-content">
+                        <div>
+                            <i class="fa fa-usd"></i>
+                        </div>
+                        <div>
+                            <p>Doanh thu<br>theo tháng</p>
+                        </div>
+                    </div>
+
+                    <div class="statistic-content">
+                        <div class="statistic-noti">
+                            <p><i class="fa fa-chevron-up"></i></p>
+                            <p>+10%</p>
+                        </div>
+                        <div class="statistic-money">
+                            <span class="">2000</span> VND
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="statistic-content">
+                        <div>
+                            <i class="fa fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>học viên</p>
+                        </div>
+                    </div>
+                    <div class="statistic-content">
+                        <div class="statistic-noti">
+                            <p><i class="fa fa-chevron-up"></i></p>
+                            <p>+10%</p>
+                        </div>
+                        <div class="statistic-money">
+                            <span class="">{{total_students}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="statistic-content">
+                        <div>
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>lớp học</p>
+                        </div>
+                    </div>
+                    <div class="statistic-content">
+                        <div class="statistic-noti">
+                            <p><i class="fa fa-chevron-up"></i></p>
+                            <p>+10%</p>
+                        </div>
+                        <div class="statistic-money">
+                            <span class="">2000 </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="statistic-content">
+                        <div>
+                            <i class="fa fa-id-card-o"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>giáo viên</p>
+                        </div>
+                    </div>
+                    <div class="statistic-content">
+                        <div class="statistic-noti">
+                            <p><i class="fa fa-chevron-up"></i></p>
+                            <p>+10%</p>
+                        </div>
+                        <div class="statistic-money">
+                            <span class="">2000</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+        </div>
+        <div class="other">
+            <div class="activity">
+                <p>Hoạt động gần đây</p>
+                <div>
+                    <ul>
+                    <li>
+                        <i class="fa fa-circle-o"></i>
+                        <p>aaa</p>
+                    </li>
+                    <li>
+                        <i class="fa fa-circle-o"></i>
+                        <p>bbb</p>
+                    </li>
+                </ul>
+                </div>
+
+            </div>
+            <div>
+                <div class="information">
+                    <p>Thông tin cá nhân</p>
+                    <div>
+                        <div>
+                            <div class="img">
+                                <img src="https://res.cloudinary.com/dczihneby/image/upload/v1764701782/animal-avatar-bear-svgrepo-com_mtjrz9.svg">
+                            </div>
+                        </div>
+                        <div class="information-info">
+                        <ul>
+                            <li>Họ tên</li>
+                            <li>Mã nhân viên</li>
+                            <li>Ngày sinh</li>
+                            <li>Mail</li>
+                        </ul>
+                        <ul>
+                            <li>:</li>
+                            <li>:</li>
+                            <li>:</li>
+                            <li>:</li>
+                        </ul>
+                        <ul>
+                            <li>Họ tên</li>
+                            <li>Mã nhân viên</li>
+                            <li>Ngày sinh</li>
+                            <li>Mail</li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+                <div class="access">
+                    <p>Truy cập nhanh</p>
+                    <div>
+                        <div>
+                            <button class="btn-create-course" onclick="window.location.href='{{ admin_view.get_url("course.create_view") }}'">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thêm khóa học</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="btn-create-class" onclick="window.location.href='{{ admin_view.get_url("classroom.create_view") }}'">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thêm lớp học</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="btn-create-user" onclick="window.location.href='{{ admin_view.get_url("user.create_view") }}'">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thêm tài khoản</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="btn-noti">
+                                <span><i class="fa fa-user-o"></i></span>
+                                <span>Thông báo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 {%endblock%}
