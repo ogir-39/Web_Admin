@@ -41,10 +41,10 @@ class DashboardView(BaseView):
 
 
 class MyAdminIndexView(AdminIndexView):
-    @expose('/')
-    def index(self):
-        return self.render("index.html",total_students = admin_services.getToTalStudents())
-    # pass
+    # @expose('/')
+    # def index(self):
+    #     return self.render("index.html",total_students = admin_services.getToTalStudents())
+    pass
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
