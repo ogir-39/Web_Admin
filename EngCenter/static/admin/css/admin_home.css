@@ -218,15 +218,17 @@ form.form-control {
     width: 60%;
     justify-items: end;
     padding: 0 0.5rem;
-    align-content: end;
 }
 
 .statistic-content p {
     margin: 0;
-    color: var(--xam);
 }
 
-.statistic-content > p {
+.statistic-money {
+    font-size: 10px !important;
+}
+
+.statistic-money span {
     font-size: 25px;
     font-weight: bold;
     color: black;
@@ -234,6 +236,10 @@ form.form-control {
 
 .statistic-content > div {
     justify-self: center;
+}
+
+.statistic-money {
+    justify-self: right !important;
 }
 
 .statistic-noti {
@@ -512,4 +518,12 @@ form.form-control {
     font-size: 16px;
     color: black;
     font-size: bold;
+}
+
+/**/
+
+@media screen and (max-width: 992px) {
+    .side-bar {
+        max-width: 100px !important;
+    }
 }

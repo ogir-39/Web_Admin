@@ -1,4 +1,4 @@
-from flask import redirect, url_for
+from flask import redirect, url_for, render_template
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.menu import MenuLink
@@ -6,7 +6,8 @@ from flask_admin.theme import Bootstrap4Theme
 from flask_login import current_user, logout_user
 from sqlalchemy import func
 
-from EngCenter import db, app
+from EngCenter import db, app, services
+from EngCenter.services import admin_services
 from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum
 
 
@@ -23,26 +24,6 @@ def get_model_name(view, context, model, name):
 
     # Trả về giá trị trống nếu không có khóa học nào được liên kết
     return "N/A"
-
-
-def get_total_revenue():
-    """Tính tổng doanh thu từ Bill ở trạng thái PAID."""
-
-    total_revenue = db.session.query(
-        func.sum(Course.fee)
-    ).select_from(Bill).join(
-        Enrollment, Bill.enrollment_id == Enrollment.id
-    ).join(
-        Classroom, Enrollment.class_id == Classroom.id
-    ).join(
-        Course, Classroom.course_id == Course.id
-    ).filter(
-        # Đảm bảo bạn sử dụng tham chiếu Enum đúng
-        Bill.status == BillEnum.PAID
-    ).scalar()
-    # ✅ Fix NULL: Đảm bảo trả về 0 nếu kết quả là None (không có doanh thu) ✅
-    # Việc này ngăn lỗi định dạng số hoặc hiển thị trống.
-    return total_revenue if total_revenue is not None else 0
 
 class DashboardView(BaseView):
     @expose('/')
@@ -62,11 +43,7 @@ class DashboardView(BaseView):
 class MyAdminIndexView(AdminIndexView):
     @expose('/')
     def index(self):
-        # 1. Tính toán và định dạng doanh thu
-        revenue = get_total_revenue()
-        revenue_display = "{:,.0f}".format(revenue) if revenue is not None else "0"
-
-        return self.render('index.html',total_revenue=revenue_display)
+        return self.render("index.html",total_students = admin_services.getToTalStudents())
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
@@ -118,7 +95,7 @@ class ClassView(SharedView):
 
 
 
-admin = Admin(app=app, theme=Bootstrap4Theme())
+admin = Admin(app=app, theme=Bootstrap4Theme(), index_view=MyAdminIndexView())
 
 category_QLDuLieu= 'Quản lý dữ liệu'
 
