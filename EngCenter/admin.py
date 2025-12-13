@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template
+from flask import redirect, url_for, render_template, current_app
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.menu import MenuLink

@@ -1,8 +1,6 @@
-from flask import Flask
+from flask import Flask, current_app
 from flask_sqlalchemy import SQLAlchemy
 
-from EngCenter.routes.admin_routes import admin_bp
-from EngCenter.routes.main_routes import main_bp
 
 
 app = Flask(__name__)
@@ -13,8 +11,19 @@ db = SQLAlchemy(app)
 
 from EngCenter.services.admin_services import format_large_number
 app.jinja_env.filters["large_number"] = format_large_number
-app.register_blueprint(main_bp)
-app.register_blueprint(admin_bp)
 
-# from EngCenter.routes.admin_routes import admin_bp
-# app.register_blueprint(admin_bp)
+
+from EngCenter.routes.admin_routes import admin_bp
+from EngCenter.routes.main_routes import main_bp
+app.register_blueprint(main_bp)
+app.register_blueprint(admin_bp, url_prefix='/admin')
+
+@current_app.context_processor
+def inject_admin_view():
+    return dict(
+        admin_view={
+            'admin_view_url': '/admin/',
+            'admin_view_name': 'ENGLISH CENTER'
+        }
+    )
+

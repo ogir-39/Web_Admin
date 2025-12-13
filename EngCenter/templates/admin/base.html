@@ -54,11 +54,11 @@
                 {% block main_menu %}
                     <ul class="nav navbar-nav mr-auto flex-column">
                         {{ layout.menu() }}
-                        {%block statistic_menu%}
-                        {%endblock%}
+
                     </ul>
                 {% endblock %}
-
+                {%block statistic_menu%}
+                    {%endblock%}
                     {% block menu_links %}
                     <ul class="nav navbar-nav navbar-right">
                         {{ layout.menu_links() }}
