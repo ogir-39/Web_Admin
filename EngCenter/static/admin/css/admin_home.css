@@ -108,6 +108,10 @@ p, li, a {
     width: auto !important;
 }
 
+.navbar-nav .dropdown.active > .nav-link{
+    color: white !important;
+}
+
 .navbar-nav .dropdown .dropdown-item {
     color: var(--chuXam);
 }
@@ -115,7 +119,7 @@ p, li, a {
 .navbar-nav .dropdown .dropdown-item.active {
     color: white !important;
     background-color: transparent !important;
-    
+
 }
 
 .navbar-nav .dropdown .dropdown-item:hover {

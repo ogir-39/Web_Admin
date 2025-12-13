@@ -9,7 +9,7 @@ $(document).ready(function() {
     if (activeMenuItem.length > 0) {
         // 3. Tìm phần tử LI cha chứa toàn bộ dropdown (ví dụ: LI của "Quản lý dữ liệu")
         // .closest() tìm phần tử cha gần nhất khớp với selector
-        var parentDropdown = activeMenuItem.closest('li.dropdown-toggle');
+        var parentDropdown = activeMenuItem.closest('ul.dropdown-menu');
 
         // 4. Thêm class 'active' (hoặc 'open') vào LI cha để giữ nó mở
         if (parentDropdown.length > 0) {

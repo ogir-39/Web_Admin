@@ -22,6 +22,19 @@
     </div>
 {% endblock %}
 
+{% block statistic_menu %}
+    <li class="dropdown">
+        <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:void(0)">
+            Thống kê
+            <i class="glyphicon glyphicon-chevron-down small"></i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="dropdown-item" href="/admin/statistic_revenue/">Doanh thu</li>
+        </ul>
+    </li>
+
+{%endblock %}
+
 {% block menu_links %}
     <ul class="nav navbar-nav navbar-right">
         <hr>
@@ -33,5 +46,5 @@
 
 {% block tail %}
     {{super()}}
-    <script src="{{ url_for('static', filename='/admin/js/admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='/admin/js/admin_home.js') }}"></script>
 {% endblock %}

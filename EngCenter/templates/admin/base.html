@@ -54,6 +54,8 @@
                 {% block main_menu %}
                     <ul class="nav navbar-nav mr-auto flex-column">
                         {{ layout.menu() }}
+                        {%block statistic_menu%}
+                        {%endblock%}
                     </ul>
                 {% endblock %}
 

@@ -9,21 +9,9 @@ from sqlalchemy import func
 from EngCenter import db, app, services
 from EngCenter.services import admin_services
 from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum
+from EngCenter.services.admin_services import get_model_name
+from EngCenter.templates import admin
 
-
-def get_model_name(view, context, model, name):
-    """Lấy tên khóa học từ đối tượng Course liên quan."""
-
-    # Giả định: Cột Foreign Key trong Model Class của bạn là 'course'
-    # và đối tượng Course có thuộc tính là 'name'
-    model_object = getattr(model, name)  # Lỗi xảy ra ở đây vì 'model' (Classroom) không có thuộc tính 'course'
-
-    if model_object:
-        # Trả về tên khóa học (course.name)
-        return model_object.name
-
-    # Trả về giá trị trống nếu không có khóa học nào được liên kết
-    return "N/A"
 
 class DashboardView(BaseView):
     @expose('/')
@@ -48,7 +36,6 @@ class MyAdminIndexView(AdminIndexView):
         total_teachers = admin_services.getTotalTeachers()
         return self.render("/admin/index.html",total_students = total_students,
                            monthly_revenue = monthly_revenue, total_teachers = total_teachers, total_classrooms= total_classrooms)
-#     pass
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
@@ -99,7 +86,6 @@ class ClassView(SharedView):
 
 
 
-
 admin = Admin(app=app, theme=Bootstrap4Theme(),index_view=MyAdminIndexView())
 
 category_QLDuLieu= 'Quản lý dữ liệu'
@@ -109,4 +95,6 @@ admin.add_view(UserView(User, db.session,category=category_QLDuLieu,name="Tài k
 admin.add_view(ClassView(Classroom,db.session,category=category_QLDuLieu,name="Lớp học"))
 
 category_ThongKe= 'Thống kê'
+
+# admin.add_view(ModelView(Bill, db.session, category=category_ThongKe,name="Doanh thu"))
 
