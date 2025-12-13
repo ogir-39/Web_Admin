@@ -1,4 +1,4 @@
-from flask import Flask, current_app
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -18,12 +18,5 @@ from EngCenter.routes.main_routes import main_bp
 app.register_blueprint(main_bp)
 app.register_blueprint(admin_bp, url_prefix='/admin')
 
-@current_app.context_processor
-def inject_admin_view():
-    return dict(
-        admin_view={
-            'admin_view_url': '/admin/',
-            'admin_view_name': 'ENGLISH CENTER'
-        }
-    )
+
 
