@@ -39,12 +39,16 @@ class DashboardView(BaseView):
         create_class_url = url_for('classroom.create_view')
         return self.render('index.html', create_class_url=create_class_url)
 
-
 class MyAdminIndexView(AdminIndexView):
-    # @expose('/')
-    # def index(self):
-    #     return self.render("index.html",total_students = admin_services.getToTalStudents())
-    pass
+    @expose('/')
+    def index(self):
+        total_students = admin_services.getToTalStudents()
+        monthly_revenue = admin_services.getMonthlyRevenue()
+        total_classrooms = admin_services.getTotalClassrooms()
+        total_teachers = admin_services.getTotalTeachers()
+        return self.render("/admin/index.html",total_students = total_students,
+                           monthly_revenue = monthly_revenue, total_teachers = total_teachers, total_classrooms= total_classrooms)
+#     pass
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
@@ -96,7 +100,7 @@ class ClassView(SharedView):
 
 
 
-admin = Admin(app=app, theme=Bootstrap4Theme())
+admin = Admin(app=app, theme=Bootstrap4Theme(),index_view=MyAdminIndexView())
 
 category_QLDuLieu= 'Quản lý dữ liệu'
 

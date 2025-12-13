@@ -1,5 +1,6 @@
 :root {
     --xam: rgb(77,81,84);
+    --chuXam: #ffffff80;
     --xanhduong: rgb(26,35,126);
     --xanhbien: #0d6efd;
     --den: #212529;
@@ -19,11 +20,15 @@ p, li, a {
 }
 
 /*BRAND*/
-.brand-logo-container {
+.brand-logo-container a{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     line-height: 0.85;
+}
+
+.brand-logo-container a:hover{
+    color: transparent !important;
 }
 
 .brand-text-top {
@@ -70,21 +75,30 @@ p, li, a {
 }
 
 .navbar-nav .nav-link {
-    color: white;
+    color: var(--chuXam);
 }
 
 .navbar-nav .dropdown-toggle{
-    color: #545e68 !important;
+    color: var(--chuXam) !important;
 }
 
-.navbar-nav .dropdown-toggle::after{
-    display: none;
+.navbar-nav .dropdown-toggle:hover{
+    color: white !important;
 }
+
+.navbar-nav .dropdown-toggle.active{
+    color: white !important;
+
+}
+
+/*.navbar-nav .dropdown-toggle::after{*/
+/*    display: none;*/
+/*}*/
 
 .navbar-nav .dropdown .dropdown-menu {
     /* Loại bỏ viền, nền trắng của dropdown */
     position: static !important; /* Quan trọng: Giữ nó trong luồng sidebar */
-    display: block !important;    /* Quan trọng: Luôn hiển thị (không ẩn/xổ xuống) */
+    /*display: block !important;    !* Quan trọng: Luôn hiển thị (không ẩn/xổ xuống) *!*/
     background-color: transparent !important; /* Nền trong suốt để thấy sidebar */
     border: none !important;
     box-shadow: none !important;
@@ -95,16 +109,29 @@ p, li, a {
 }
 
 .navbar-nav .dropdown .dropdown-item {
-    color: #ffffffbf;
+    color: var(--chuXam);
 }
 
-#main-sidebar .dropdown-item:active {
-    color: white;
+.navbar-nav .dropdown .dropdown-item.active {
+    color: white !important;
     background-color: transparent !important;
+    
 }
 
 .navbar-nav .dropdown .dropdown-item:hover {
     background-color: var(--xam);
+    color: white;
+}
+
+.navbar-right {
+    flex-direction: column !important;
+    list-style: none !important;
+}
+
+.navbar-right hr {
+    display: block;
+    border-top: 0.5px solid var(--xam);
+    margin: 0;
 }
 
 /*content*/
@@ -224,14 +251,18 @@ form.form-control {
     margin: 0;
 }
 
-.statistic-money {
+
+.vnd {
     font-size: 10px !important;
+    font-weight: normal !important;
 }
 
 .statistic-money span {
     font-size: 25px;
     font-weight: bold;
     color: black;
+    display: block;
+    text-align: right;
 }
 
 .statistic-content > div {
@@ -444,6 +475,7 @@ form.form-control {
 .access div > div {
     width: 50%;
     padding: 0.5rem;
+    min-width: 180px;
 }
 
 .access button{
@@ -524,6 +556,28 @@ form.form-control {
 
 @media screen and (max-width: 992px) {
     .side-bar {
-        max-width: 100px !important;
+        max-width: auto !important;
+        min-width: auto;
+    }
+
+    .other {
+        display: block;
+    }
+
+    .other > div {
+        width: 100% !important;
+        margin: 0;
+        margin-top: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 520px) {
+    .access > div {
+        display: block;
+    }
+
+    .access > div > div {
+        width: 100%;
     }
 }
