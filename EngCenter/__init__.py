@@ -12,6 +12,14 @@ db = SQLAlchemy(app)
 from EngCenter.services.admin_services import format_large_number
 app.jinja_env.filters["large_number"] = format_large_number
 
+@app.context_processor
+def inject_admin_view():
+    return dict(
+        admin_view={
+            'admin_view_url': '/admin/',
+            'admin_view_name': 'ENGLISH CENTER'
+        }
+    )
 
 from EngCenter.routes.admin_routes import admin_bp
 from EngCenter.routes.main_routes import main_bp
