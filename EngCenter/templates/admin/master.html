@@ -9,7 +9,6 @@
     <!-- CSS mới của bạn -->
     {% block extra_css %}
         <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/admin_home.css') }}">
-        <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
     {% endblock %}
 {% endblock %}
 
@@ -30,4 +29,9 @@
             <a class="nav-link">Đăng xuất</a>
         </li>
     </ul>
+{% endblock %}
+
+{% block tail %}
+    {{super()}}
+    <script src="{{ url_for('static', filename='/admin/js/admin.js') }}"></script>
 {% endblock %}
