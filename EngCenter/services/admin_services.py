@@ -2,9 +2,11 @@ from calendar import month
 from datetime import datetime, timezone
 import pytz
 from dateutil.relativedelta import relativedelta
-from sqlalchemy import func
+from sqlalchemy import func, literal_column, union_all, select
+from sqlalchemy.orm import aliased
+
 from EngCenter import db, app
-from EngCenter.models.models import Bill, BillEnum, Student, Teacher, Classroom
+from EngCenter.models.models import Bill, BillEnum, Student, Teacher, Classroom, Enrollment, Course
 
 
 def format_large_number(number):
@@ -32,10 +34,28 @@ def format_large_number(number):
         # Dưới 1 triệu, hiển thị định dạng số thường (có dấu phẩy)
         return f'{number:,.0f}'  # Ví dụ: 990,000 VND
 
+def getDataTable(selected_month, selected_year):
+    month_filter = func.month(Classroom.start_date).__eq__(selected_month)
+    year_filter = func.year(Classroom.start_date).__eq__(selected_year)
+
+    query = (
+        db.session.query((Course.name),func.count(Classroom.course_id).label('ToTalClasses'),func.count(Enrollment.class_id).label('ToTalStudents'))
+        .join(Classroom, (Classroom.course_id.__eq__(Course.id)) & month_filter & year_filter,isouter=True)
+        .join(Enrollment, Enrollment.class_id==Classroom.id, isouter=True)
+        .group_by(Course.name)
+    )
+
+    result = query.all()
+    data = [{
+        'coursename' : r.name,
+        'totalclassrooms' : r.ToTalClasses,
+        'totalstudents' : r.ToTalStudents
+    } for r in result ]
+
+    return data
+
 def getMonthlyRevenue():
-    # Lấy ngày đầu tiên của tháng hiện tại (00:00:00)
     start_of_month = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    # Lấy ngày đầu tiên của tháng tiếp theo (tháng hiện tại + 1)
     start_of_next_month = start_of_month + relativedelta(months=+1)
     query = (
         db.session.query(func.sum(Bill.unit_price))
@@ -49,6 +69,69 @@ def getMonthlyRevenue():
     print(query)
     result = query.scalar()
     return result if result is not None else 0
+
+
+def getAnnualRevenue(selected_year: int):
+    # 1. TẠO CTE DANH SÁCH 12 THÁNG (Months_CTE)
+
+    # Tạo danh sách các SELECT 1, SELECT 2, ..., SELECT 12
+    # Sử dụng literal_column để tạo cột "month_number" có giá trị từ 1 đến 12
+    month_selects = []
+    for i in range(1, 13):
+        # Tạo một SELECT statement đơn giản: SELECT i AS month_number
+        month_selects.append(select(literal_column(str(i)).label('month_number')))
+
+    # Kết hợp tất cả các SELECT thành một CTE bằng UNION ALL
+    months_cte = union_all(*month_selects).cte("months")
+
+    # 2. TÍNH DOANH THU THỰC TẾ THEO THÁNG (MonthlySales_CTE)
+    monthly_sales = (
+        db.session.query(
+            func.month(Bill.create_date).label('month_number'),
+            func.sum(Bill.unit_price).label('monthly_revenue')
+        )
+        .filter(
+            Bill.status == BillEnum.PAID,  # Lọc trạng thái PAID
+            func.year(Bill.create_date) == selected_year  # Lọc theo năm được chọn
+        )
+        .group_by(literal_column('month_number'))  # Group theo số tháng
+        .cte('monthly_sales')
+    )
+
+    # 3. OUTER JOIN và Xử lý NULL (COALESCE)
+
+    # Tạo bí danh (Alias) cho các CTE để sử dụng trong JOIN
+    M = aliased(months_cte)
+    MS = aliased(monthly_sales)
+
+    query = (
+        db.session.query(
+            M.c.month_number,
+            # Lấy Tên Tháng: Chuyển đổi số tháng (1->12) thành giá trị ngày tháng hợp lệ
+            func.monthname(func.str_to_date(
+                func.concat(selected_year, '-', M.c.month_number, '-01'),
+                '%Y-%c-%d')
+            ).label('month_name'),
+            # Dùng COALESCE để thay thế giá trị NULL (tháng không có doanh thu) bằng 0
+            func.coalesce(MS.c.monthly_revenue, 0).label('total_revenue')
+        )
+        # LEFT JOIN (outerjoin) danh sách 12 tháng với doanh thu thực tế
+        .outerjoin(MS, M.c.month_number == MS.c.month_number)
+        .order_by(M.c.month_number)
+    )
+
+    result = query.all()
+
+    # 4. CHUYỂN ĐỔI KẾT QUẢ SANG LIST OF DICTS
+    data = [
+        {
+            'month_number': r.month_number,
+            'month_name': r.month_name,
+            'total_revenue': r.total_revenue
+        } for r in result
+    ]
+
+    return data
 
 def getToTalStudents():
     query = db.session.query(func.count(Student.id)) .filter()
@@ -75,6 +158,6 @@ def get_model_name(view, context, model, name):
     # Trả về giá trị trống nếu không có khóa học nào được liên kết
     return "N/A"
 
-if __name__ == '__main__':
+if __name__=="__main__":
     with app.app_context():
-        print(getMonthlyRevenue())
+        print(getAnnualRevenue(2025))

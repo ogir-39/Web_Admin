@@ -1,15 +1,20 @@
+
 import enum
 from datetime import datetime
+
+from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String, DateTime, Date, Enum, ForeignKey, Time, Boolean
 from sqlalchemy.dialects.mysql import DECIMAL, DOUBLE
 from sqlalchemy.dialects.mssql import TINYINT
-from EngCenter import app, db
+from EngCenter import db
 
 
 # ==========================================
 # 1. CẤP ĐỘ 1: USER (Thông tin định danh chung)
 # ==========================================
-class User(db.Model):
+
+
+class User(db.Model,UserMixin):
     __tablename__ = 'user'
 
     id = Column(String(10), primary_key=True)
@@ -27,6 +32,8 @@ class User(db.Model):
 
     type = Column(String(20))
 
+    bank = Column(String(100))
+
     __mapper_args__ = {
         'polymorphic_identity': 'user',
         'polymorphic_on': type
@@ -42,8 +49,6 @@ class Student(User):
     id = Column(String(10), ForeignKey('user.id'), primary_key=True)
 
     emergency_contact = Column(String(250))
-    # occupation = Column(String(150))
-    # source_channel = Column(String(100))  # Nguồn khách (Facebook, Google...)
 
     __mapper_args__ = {
         'polymorphic_identity': 'student'
@@ -55,9 +60,9 @@ class Employee(User):
 
     id = Column(String(10), ForeignKey('user.id'), primary_key=True)
 
-    salary = Column(DECIMAL(10, 2), nullable=False, default=0)
-    hired_date = Column(Date, default=datetime.now)
-
+    base_salary = Column(DECIMAL(10, 2), nullable=False, default=0)
+    hired_date = Column(Date, default=datetime.now,nullable=False)
+    hour_rate = Column(DOUBLE, nullable=False, default=0)
     __mapper_args__ = {
         'polymorphic_identity': 'employee'
     }
@@ -144,6 +149,11 @@ class AttendanceStatusEnum(enum.Enum):
     PRESENT = 0
     ABSENT = 1
 
+class TeachingStatusEnum(enum.Enum):
+    PENDING = 0
+    APPROVED = 1
+    REJECTED = 2
+
 
 class Course(db.Model):
     id = Column(String(10), primary_key=True)
@@ -153,6 +163,7 @@ class Course(db.Model):
     level = Column(Enum(SkillEnum), nullable=False)
     duration_hour = Column(String(10), nullable=False)
     course_description = Column(String(250))
+    image = Column(String(500))
 
 
 class Classroom(db.Model):
@@ -257,8 +268,24 @@ class Bill(db.Model):
     cashier = db.relationship('Cashier', backref='processed_bills')
 
 
-if __name__ == '__main__':
-    with app.app_context():
-        # Lưu ý: Nếu database cũ đã có dữ liệu, bạn cần drop tables cũ hoặc migrate
-        db.drop_all()
-        db.create_all()
+class TeachingLog(db.Model):
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    teacher_id = Column(String(10), ForeignKey('teacher.id'), nullable=False)
+
+    classroom_id = Column(String(10), ForeignKey(Classroom.id), nullable=False)
+
+    check_in_time = Column(DateTime, default=datetime.now)
+    teaching_date = Column(Date, nullable=False)
+
+    duration_hour = Column(DOUBLE, nullable=False)
+
+    hour_rate_snapshot = Column(DOUBLE, nullable=False)
+
+    status = Column(Enum(TeachingStatusEnum), default=TeachingStatusEnum.PENDING)
+    admin_note = Column(String(255))
+
+    teacher = db.relationship('Teacher', backref='teaching_logs')
+
+    classroom = db.relationship('Classroom', backref='teaching_logs')

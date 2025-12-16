@@ -1,5 +1,222 @@
 {% extends '/admin/master.html' %}
 
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename='admin/css/revenue.css') }}" rel="stylesheet">
+{% endblock %}
+
 {%block content_main%}
-    <p>hihi</p>
+<div class="content-header">
+    <p>Thống kê /</p>
+    <p></p>
+</div>
+<div class="content-body">
+    <div>
+        <div class="content-cell">
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="statistic-content">
+                        <div>
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>lớp học</p>
+                        </div>
+                    </div>
+                    <div class="statistic-content">
+                        <div class="statistic-money">
+                            <span class="">{{total_classrooms}}</span>
+                            <span class="vnd">lớp</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="statistic-content">
+                        <div>
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div>
+                            <p>Tổng số<br>học sinh</p>
+                        </div>
+                    </div>
+                    <div class="statistic-content">
+                        <div class="statistic-money">
+                            <span class="">{{total_students}}</span>
+                            <span class="vnd">người</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+            <div>
+                <div class="statistic-header">
+                </div>
+                <div class="statistic-body">
+                    <div class="sta-cont-head">
+                        <form>
+                            <label for="sta-select">Thống kê theo tháng</label>
+                            <select id="sta-select" name="month" onchange="this.form.submit()">
+                            {% for month in months_list %}
+                                <option value="{{ month.value }}"
+                                    {% if month.value == current_month %}selected{% endif %}>
+                                    {{ month.label }}
+                                </option>
+                            {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+                    <div class="statistic-content">
+                        <div>
+                            <div class="sta-cont-body">
+                                <span>Tổng doanh thu năm:</span>
+                                <span>5000</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="sta-cont-body">
+                                <span>Tháng cao nhất:</span>
+                                <span>5000</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="sta-cont-body">
+                                <span>Doanh thu trung bình:</span>
+                                <span>5000</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="sta-cont-body">
+                                <span>Tháng thấp nhất:</span>
+                                <span>5000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="statistic-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="content-cell my-chart">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            const ctx = document.getElementById('myChart');
+
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <div>
+        <div class="content-cell month">
+            <div class="month-header">
+                <form>
+                    <label for="month-select">Doanh thu theo tháng</label>
+                    <select id="month-select" name="month" onchange="this.form.submit()">
+                    {% for month in months_list %}
+                        <option value="{{ month.value }}"
+                            {% if month.value == current_month %}selected{% endif %}>
+                            {{ month.label }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </form>
+                <div class="statistic-money">
+                    <span>{{monthly_revenue | large_number}}</span>
+                    <span>VND</span>
+                </div>
+            </div>
+            <div class="month-body">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>KHÓA HỌC</th>
+                        <th>SỐ LỚP MỞ</th>
+                        <th>SỐ LƯỢNG HỌC VIÊN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in course_data %}
+                    <tr>
+                        <td>{{ row.coursename }}</td>
+                        <td>{{ row.totalclassrooms }}</td>
+                        <td>{{ row.totalstudents }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3">Không có dữ liệu khóa học nào trong tháng này.</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="content-cell my-chart">
+            <canvas id="myChart2"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            const ctx2 = document.getElementById('myChart2');
+
+            new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>
 {%endblock%}

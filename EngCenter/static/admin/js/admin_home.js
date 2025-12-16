@@ -17,4 +17,12 @@ $(document).ready(function() {
             parentDropdown.addClass('active show');
         }
     }
+
+    const inputs = document.querySelectorAll('input[placeholder]');
+
+    // 2. Lặp qua danh sách các thẻ input đã chọn
+    inputs.forEach(input => {
+        // 3. Đổi giá trị của thuộc tính placeholder
+        input.placeholder = "Nhập từ khoá";
+    });
 });

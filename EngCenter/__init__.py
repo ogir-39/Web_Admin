@@ -21,10 +21,8 @@ def inject_admin_view():
         }
     )
 
-from EngCenter.routes.admin_routes import admin_bp
 from EngCenter.routes.main_routes import main_bp
 app.register_blueprint(main_bp)
-app.register_blueprint(admin_bp, url_prefix='/admin')
 
 
 

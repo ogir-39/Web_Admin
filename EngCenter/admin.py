@@ -1,4 +1,7 @@
-from flask import redirect, url_for, render_template, current_app
+from calendar import month
+from datetime import datetime
+
+from flask import redirect, url_for, render_template, current_app, request
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.menu import MenuLink
@@ -9,7 +12,7 @@ from sqlalchemy import func
 from EngCenter import db, app, services
 from EngCenter.services import admin_services
 from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum
-from EngCenter.services.admin_services import get_model_name
+from EngCenter.services.admin_services import get_model_name, getDataTable
 from EngCenter.templates import admin
 
 
@@ -36,6 +39,26 @@ class MyAdminIndexView(AdminIndexView):
         total_teachers = admin_services.getTotalTeachers()
         return self.render("/admin/index.html",total_students = total_students,
                            monthly_revenue = monthly_revenue, total_teachers = total_teachers, total_classrooms= total_classrooms)
+    @expose('/revenue')
+    def revenue(self):
+        total_students = admin_services.getToTalStudents()
+        monthly_revenue = admin_services.getMonthlyRevenue()
+        total_classrooms = admin_services.getTotalClassrooms()
+
+        # 1. Lấy tham số tháng/năm từ request (có thể từ Form/URL)
+        # Ví dụ, lấy tháng 12 năm 2025 mặc định
+        selected_month = request.args.get('month', type=int, default=datetime.now().month)
+        selected_year = request.args.get('year', type=int, default=datetime.now().year)
+        annual_revenue_data = admin_services.getAnnualRevenue(selected_year)  # <--- HÀM MỚI
+
+        # 2. Gọi hàm Service để lấy dữ liệu (list of dicts)
+        report_data = getDataTable(selected_month, selected_year)
+
+        # 3. Tạo list tháng/năm cho dropdown menu (giống như hình ảnh của người kia)
+        months = [{'value': i, 'label': f'Tháng {i}', 'selected': i == selected_month} for i in range(1, 13)]
+        return self.render("/admin/revenue.html",total_students = total_students,
+                           monthly_revenue = monthly_revenue, total_classrooms= total_classrooms,
+                            course_data=report_data,months_list=months,current_month=selected_month, annual_revenue=annual_revenue_data,)
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'

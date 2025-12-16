@@ -74,6 +74,10 @@ p, li, a {
     width: 100%;
 }
 
+.navbar-nav .dropdown{
+    width: 100%;
+}
+
 .navbar-nav .nav-link {
     color: var(--chuXam);
 }
@@ -106,6 +110,11 @@ p, li, a {
     margin: 0;
     float: none !important;
     width: auto !important;
+    width: 100% !important;
+}
+
+.navbar-nav .dropdown .dropdown-menu li {
+    width: 100%;
 }
 
 .navbar-nav .dropdown.active > .nav-link{
