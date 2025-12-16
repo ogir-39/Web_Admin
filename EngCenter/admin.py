@@ -8,11 +8,12 @@ from flask_admin.menu import MenuLink
 from flask_admin.theme import Bootstrap4Theme
 from flask_login import current_user, logout_user
 from sqlalchemy import func
+from werkzeug.debug import console
 
 from EngCenter import db, app, services
 from EngCenter.services import admin_services
 from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum
-from EngCenter.services.admin_services import get_model_name, getDataTable
+from EngCenter.services.admin_services import get_model_name, get_data_table
 from EngCenter.templates import admin
 
 
@@ -33,32 +34,44 @@ class DashboardView(BaseView):
 class MyAdminIndexView(AdminIndexView):
     @expose('/')
     def index(self):
-        total_students = admin_services.getToTalStudents()
-        monthly_revenue = admin_services.getMonthlyRevenue()
-        total_classrooms = admin_services.getTotalClassrooms()
-        total_teachers = admin_services.getTotalTeachers()
+        selected_month = request.args.get('month', type=int, default=datetime.now().month)
+        total_students = admin_services.get_total_students()
+        monthly_revenue = admin_services.get_monthly_revenue(selected_month)
+        total_classrooms = admin_services.get_total_classrooms()
+        total_teachers = admin_services.get_total_teachers()
         return self.render("/admin/index.html",total_students = total_students,
                            monthly_revenue = monthly_revenue, total_teachers = total_teachers, total_classrooms= total_classrooms)
+
     @expose('/revenue')
     def revenue(self):
-        total_students = admin_services.getToTalStudents()
-        monthly_revenue = admin_services.getMonthlyRevenue()
-        total_classrooms = admin_services.getTotalClassrooms()
-
-        # 1. Lấy tham số tháng/năm từ request (có thể từ Form/URL)
-        # Ví dụ, lấy tháng 12 năm 2025 mặc định
         selected_month = request.args.get('month', type=int, default=datetime.now().month)
         selected_year = request.args.get('year', type=int, default=datetime.now().year)
-        annual_revenue_data = admin_services.getAnnualRevenue(selected_year)  # <--- HÀM MỚI
 
-        # 2. Gọi hàm Service để lấy dữ liệu (list of dicts)
-        report_data = getDataTable(selected_month, selected_year)
+        raw_annual_revenue_data = admin_services.get_annual_revenue(selected_year)
+        annual_revenue_data = [item['total_revenue'] for item in raw_annual_revenue_data]
 
-        # 3. Tạo list tháng/năm cho dropdown menu (giống như hình ảnh của người kia)
+        report_data = get_data_table(selected_month, selected_year)
+
+        total_students = admin_services.get_total_students()
+        monthly_revenue = admin_services.get_monthly_revenue(selected_month)
+        total_classrooms = admin_services.get_total_classrooms()
+        bill_years = admin_services.get_bill_year()
+        total_annual_revenue = admin_services.get_total_annual_revenue(selected_year)
+        highest_monthly_revenue = admin_services.get_highest_monthly_revenue(selected_year)
+        lowest_monthly_revenue = admin_services.get_lowest_monthly_revenue(selected_year)
+
         months = [{'value': i, 'label': f'Tháng {i}', 'selected': i == selected_month} for i in range(1, 13)]
         return self.render("/admin/revenue.html",total_students = total_students,
-                           monthly_revenue = monthly_revenue, total_classrooms= total_classrooms,
-                            course_data=report_data,months_list=months,current_month=selected_month, annual_revenue=annual_revenue_data,)
+                            monthly_revenue = monthly_revenue, total_classrooms= total_classrooms,
+                            course_data=report_data,months_list=months, years_list=bill_years,
+                            current_month=selected_month, selected_year=selected_year,
+                            annual_revenue=annual_revenue_data, total_annual_revenue=total_annual_revenue,
+                            highest_monthly_revenue=highest_monthly_revenue,lowest_monthly_revenue=lowest_monthly_revenue)
+
+    expose('/ccr')
+    def ccr(self):
+        total_students = admin_services.get_total_students()
+        return self.render("/admin/ccr.html",total_students = total_students)
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
@@ -116,8 +129,4 @@ category_QLDuLieu= 'Quản lý dữ liệu'
 admin.add_view(CourseView(Course, db.session,category=category_QLDuLieu,name="Khoá học"))
 admin.add_view(UserView(User, db.session,category=category_QLDuLieu,name="Tài khoản"))
 admin.add_view(ClassView(Classroom,db.session,category=category_QLDuLieu,name="Lớp học"))
-
-category_ThongKe= 'Thống kê'
-
-# admin.add_view(ModelView(Bill, db.session, category=category_ThongKe,name="Doanh thu"))
 

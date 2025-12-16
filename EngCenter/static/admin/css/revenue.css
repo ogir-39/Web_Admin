@@ -1,16 +1,19 @@
 .content-body {
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
+
 }
 
 .content-body > div {
     width: 50%;
     min-height: 380px;
+    height: auto;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     padding: 1rem;
-
+    position: relative;
 }
 
 .content-cell {
@@ -31,13 +34,28 @@ select {
 }
 
 /*CONTENT-CELL 1ST*/
-.content-body > div:first-child {
-    padding: 0;
+#sta1 > div {
+    margin-left: 0;
+    margin-top: 0;
 }
 
+#sta2 > div {
+    margin-right: 0;
+    margin-top: 0;
+}
+
+#sta3 > div {
+    margin: 0;
+}
+
+
 .content-body div:first-child .content-cell{
-    background-color: transparent;
+    background-color: black;
     border: 0;
+}
+
+.content-body div:first-child .content-cell > div:last-child .statistic-body{
+    margin-bottom: 0;
 }
 
 .content-cell:first-child > div {
@@ -91,8 +109,14 @@ select {
     padding-left: 3rem;
 }
 
+.sta-cont-body span:nth-child(2) {
+    color: var(--xanhbien);
+    font-weight: bold;
+}
+
 /*CONTENT-CELL CHART*/
 .my-chart {
+    position: relative;
     width: 100%;
     padding: 1rem;
 }
@@ -103,17 +127,32 @@ select {
     left: 0;
 }
 
+.my-chart > div {
+    /*width: 100% !important;*/
+    position: relative;
+    height: 400px !important;
+    justify-items: center;
+}
+
+.my-chart p {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 1rem;
+    font-weight: bold;
+    color: var(--den);
+}
+
 /*CONTENT-CELL 3RD*/
 .month{
     padding: 1.5rem !important;
-    height: 400px;
     overflow: hidden;
 }
 
 .month-header {
     display: flex;
+    padding-bottom: 1rem;
     width: 100% !important;
-    height: 15%;
     justify-content: space-between;
 }
 
@@ -130,15 +169,14 @@ select {
 
 #month-select {
     height: 2rem;
+    margin-left: 1rem;
 }
 
 .month-body {
-    height: 100%;
-    overflow: auto;
-    height: 85%;
+    max-height: 400px;
+    flex: 1;
+    overflow-y: auto;
 }
-
-/*.month-body*/
 
 .month-body table {
     width: 100%;
@@ -147,4 +185,10 @@ select {
 .month-body table th, .month-body table td{
     border: 1px solid lightgray;
     padding: 1rem;
+}
+
+/*PIE CHART*/
+#pieChart {
+    position: absolute;
+    width: fit-content !important;
 }

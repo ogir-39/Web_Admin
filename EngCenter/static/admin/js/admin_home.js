@@ -1,7 +1,7 @@
 // TÊN FILE: custom_menu.js
 
 // Chờ DOM (Document Object Model) tải xong
-$(document).ready(function() {
+$(document).ready(function () {
     // 1. Tìm tất cả các mục menu con đang có class 'active'
     var activeMenuItem = $('.dropdown-item.active');
 
@@ -24,5 +24,15 @@ $(document).ready(function() {
     inputs.forEach(input => {
         // 3. Đổi giá trị của thuộc tính placeholder
         input.placeholder = "Nhập từ khoá";
+    });
+
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {...},
+        options: {
+            responsive: true,            // Cho phép biểu đồ co giãn theo khung
+            maintainAspectRatio: false,  // Tắt tỉ lệ khung hình cố định (Để nó lấp đầy chiều cao div)
+        }
     });
 });

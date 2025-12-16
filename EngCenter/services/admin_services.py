@@ -1,7 +1,10 @@
 from calendar import month
 from datetime import datetime, timezone
+from itertools import groupby
+
 import pytz
 from dateutil.relativedelta import relativedelta
+from flask import request
 from sqlalchemy import func, literal_column, union_all, select
 from sqlalchemy.orm import aliased
 
@@ -34,7 +37,7 @@ def format_large_number(number):
         # Dưới 1 triệu, hiển thị định dạng số thường (có dấu phẩy)
         return f'{number:,.0f}'  # Ví dụ: 990,000 VND
 
-def getDataTable(selected_month, selected_year):
+def get_data_table(selected_month, selected_year):
     month_filter = func.month(Classroom.start_date).__eq__(selected_month)
     year_filter = func.year(Classroom.start_date).__eq__(selected_year)
 
@@ -54,8 +57,8 @@ def getDataTable(selected_month, selected_year):
 
     return data
 
-def getMonthlyRevenue():
-    start_of_month = datetime.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+def get_monthly_revenue(selected_month):
+    start_of_month = datetime.now().replace(month=selected_month,day=1, hour=0, minute=0, second=0, microsecond=0)
     start_of_next_month = start_of_month + relativedelta(months=+1)
     query = (
         db.session.query(func.sum(Bill.unit_price))
@@ -70,8 +73,36 @@ def getMonthlyRevenue():
     result = query.scalar()
     return result if result is not None else 0
 
+def get_bill_year():
+    query = db.session.query(func.year(Bill.create_date).label('years')).distinct()
+    # return query.all()
+    result = query.all()
 
-def getAnnualRevenue(selected_year: int):
+    data = [
+        {'years' : r.years}
+        for r in result
+    ]
+    return data
+
+def get_highest_monthly_revenue(selected_year):
+    query = (db.session.query(func.month(Bill.create_date).label('month_number'))
+                .filter((func.year(Bill.create_date) == selected_year) , Bill.status == BillEnum.PAID)
+                .group_by(func.month(Bill.create_date))
+                .order_by(func.sum(Bill.unit_price).desc())
+                .limit(1))
+    result = query.scalar()
+    return result if result is not None else 0
+
+def get_lowest_monthly_revenue(selected_year):
+    query = (db.session.query(func.month(Bill.create_date).label('month_number'))
+                .filter((func.year(Bill.create_date) == selected_year) , Bill.status == BillEnum.PAID)
+                .group_by(func.month(Bill.create_date))
+                .order_by(func.sum(Bill.unit_price).asc())
+                .limit(1))
+    result = query.scalar()
+    return result if result is not None else 0
+
+def get_annual_revenue(selected_year: int):
     # 1. TẠO CTE DANH SÁCH 12 THÁNG (Months_CTE)
 
     # Tạo danh sách các SELECT 1, SELECT 2, ..., SELECT 12
@@ -133,17 +164,22 @@ def getAnnualRevenue(selected_year: int):
 
     return data
 
-def getToTalStudents():
+def get_total_annual_revenue(selected_year: int):
+    query = db.session.query(func.sum(Bill.unit_price)).filter(func.year(Bill.create_date) == selected_year)
+    result = query.scalar()
+    return result if result is not None else 0
+
+def get_total_students():
     query = db.session.query(func.count(Student.id)) .filter()
     result = query.scalar()
     return result if result is not None else 0
 
-def getTotalTeachers():
+def get_total_teachers():
     query = db.session.query(func.count(Teacher.id)) .filter()
     result = query.scalar()
     return result if result is not None else 0
 
-def getTotalClassrooms():
+def get_total_classrooms():
     query = db.session.query(func.count(Classroom.id)) .filter()
     result = query.scalar()
     return result if result is not None else 0
@@ -160,4 +196,4 @@ def get_model_name(view, context, model, name):
 
 if __name__=="__main__":
     with app.app_context():
-        print(getAnnualRevenue(2025))
+        print(get_lowest_monthly_revenue(2025))

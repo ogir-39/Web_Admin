@@ -12,8 +12,8 @@
 </div>
 <div class="content-body">
     <div>
-        <div class="content-cell">
-            <div>
+        <div class="content-cell sta">
+            <div id="sta1">
                 <div class="statistic-header">
                 </div>
                 <div class="statistic-body">
@@ -36,7 +36,7 @@
                 <div class="statistic-footer">
                 </div>
             </div>
-            <div>
+            <div id="sta2">
                 <div class="statistic-header">
                 </div>
                 <div class="statistic-body">
@@ -59,18 +59,17 @@
                 <div class="statistic-footer">
                 </div>
             </div>
-            <div>
+            <div id="sta3">
                 <div class="statistic-header">
                 </div>
                 <div class="statistic-body">
                     <div class="sta-cont-head">
-                        <form>
-                            <label for="sta-select">Thống kê theo tháng</label>
-                            <select id="sta-select" name="month" onchange="this.form.submit()">
-                            {% for month in months_list %}
-                                <option value="{{ month.value }}"
-                                    {% if month.value == current_month %}selected{% endif %}>
-                                    {{ month.label }}
+                        <form method="get">
+                            <label for="sta-select">Thống kê theo năm</label>
+                            <select id="sta-select" name="year" onchange="this.form.submit()">
+                            {% for y in years_list %}
+                                <option value="{{ y.years }}" {% if y.years == selected_year %}selected{% endif %}>
+                                    Năm {{ y.years }}
                                 </option>
                             {% endfor %}
                             </select>
@@ -80,25 +79,25 @@
                         <div>
                             <div class="sta-cont-body">
                                 <span>Tổng doanh thu năm:</span>
-                                <span>5000</span>
+                                <span>{{total_annual_revenue | large_number}} VNĐ</span>
                             </div>
                         </div>
                         <div>
                             <div class="sta-cont-body">
                                 <span>Tháng cao nhất:</span>
-                                <span>5000</span>
+                                <span>Tháng {{highest_monthly_revenue}}</span>
                             </div>
                         </div>
                         <div>
                             <div class="sta-cont-body">
                                 <span>Doanh thu trung bình:</span>
-                                <span>5000</span>
+                                <span>{{(total_annual_revenue/12) | large_number}} VNĐ</span>
                             </div>
                         </div>
                         <div>
                             <div class="sta-cont-body">
                                 <span>Tháng thấp nhất:</span>
-                                <span>5000</span>
+                                <span>Tháng {{lowest_monthly_revenue}}</span>
                             </div>
                         </div>
                     </div>
@@ -112,22 +111,26 @@
 
     <div>
         <div class="content-cell my-chart">
-            <canvas id="myChart"></canvas>
+            <p>Biểu đồ doanh thu từng tháng trong năm {{selected_year}}</p>
+            <canvas id="barChart"></canvas>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const ctx = document.getElementById('myChart');
+            const ctx = document.getElementById('barChart');
 
+            const labels = [ 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+            const dataRevenue = {{ annual_revenue | tojson }};
 
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: labels,
                     datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
+                        label: 'Tổng doanh thu (VNĐ)',
+                        data: dataRevenue,
                         borderWidth: 1
                     }]
                 },
@@ -190,13 +193,16 @@
 
     <div>
         <div class="content-cell my-chart">
-            <canvas id="myChart2"></canvas>
+            <p>Biểu đồ doanh thu theo quý năm {{selected_year}}</p>
+            <div>
+                <canvas id="pieChart"></canvas>
+            </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const ctx2 = document.getElementById('myChart2');
+            const ctx2 = document.getElementById('pieChart');
 
             new Chart(ctx2, {
                 type: 'doughnut',
