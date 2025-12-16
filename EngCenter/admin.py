@@ -46,11 +46,12 @@ class MyAdminIndexView(AdminIndexView):
     def revenue(self):
         selected_month = request.args.get('month', type=int, default=datetime.now().month)
         selected_year = request.args.get('year', type=int, default=datetime.now().year)
+        chart_type=['line','bar']
 
         raw_annual_revenue_data = admin_services.get_annual_revenue(selected_year)
         annual_revenue_data = [item['total_revenue'] for item in raw_annual_revenue_data]
 
-        report_data = get_data_table(selected_month, selected_year)
+        report_data = admin_services.get_data_table(selected_month, selected_year)
 
         total_students = admin_services.get_total_students()
         monthly_revenue = admin_services.get_monthly_revenue(selected_month)
@@ -59,19 +60,24 @@ class MyAdminIndexView(AdminIndexView):
         total_annual_revenue = admin_services.get_total_annual_revenue(selected_year)
         highest_monthly_revenue = admin_services.get_highest_monthly_revenue(selected_year)
         lowest_monthly_revenue = admin_services.get_lowest_monthly_revenue(selected_year)
+        quarterly_revenue=admin_services.get_quarterly_revenue(selected_year)
 
         months = [{'value': i, 'label': f'Tháng {i}', 'selected': i == selected_month} for i in range(1, 13)]
         return self.render("/admin/revenue.html",total_students = total_students,
                             monthly_revenue = monthly_revenue, total_classrooms= total_classrooms,
                             course_data=report_data,months_list=months, years_list=bill_years,
-                            current_month=selected_month, selected_year=selected_year,
+                            current_month=selected_month, selected_year=selected_year, quarterly_revenue=quarterly_revenue,
                             annual_revenue=annual_revenue_data, total_annual_revenue=total_annual_revenue,
                             highest_monthly_revenue=highest_monthly_revenue,lowest_monthly_revenue=lowest_monthly_revenue)
 
-    expose('/ccr')
+    @expose('/ccr')
     def ccr(self):
+        selected_year = request.args.get('year', type=int, default=datetime.now().year)
+
         total_students = admin_services.get_total_students()
-        return self.render("/admin/ccr.html",total_students = total_students)
+        quarterly_revenue=admin_services.get_quarterly_revenue(selected_year)
+
+        return self.render("/admin/ccr.html",total_students = total_students, quarterly_revenue=quarterly_revenue)
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'

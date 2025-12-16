@@ -7,7 +7,7 @@
 
 {%block content_main%}
 <div class="content-header">
-    <p>Thống kê /</p>
+    <p>Thống kê / Doanh thu</p>
     <p></p>
 </div>
 <div class="content-body">
@@ -129,7 +129,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Tổng doanh thu (VNĐ)',
+                        label: 'Tổng doanh thu tháng (VNĐ)',
                         data: dataRevenue,
                         borderWidth: 1
                     }]
@@ -204,13 +204,17 @@
         <script>
             const ctx2 = document.getElementById('pieChart');
 
+            const labels2 = ['Quý 1','Quý 2','Quý 3','Quý 4'];
+
+            const data2 = {{quarterly_revenue | tojson}}
+
             new Chart(ctx2, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: labels2,
                     datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
+                        label: 'Tổng doanh thu quý (VNĐ)',
+                        data: data2,
                         borderWidth: 1
                     }]
                 },

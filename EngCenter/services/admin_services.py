@@ -73,6 +73,23 @@ def get_monthly_revenue(selected_month):
     result = query.scalar()
     return result if result is not None else 0
 
+def get_quarterly_revenue(selected_year):
+    query = (db.session.query(func.quarter(Bill.create_date).label('quarter_number'),func.sum(Bill.unit_price).label('quarterly_revenue'))
+            .filter((Bill.status == BillEnum.PAID),func.year(Bill.create_date) == selected_year)
+            .group_by(func.quarter(Bill.create_date))
+            .order_by(func.quarter(Bill.create_date).asc()))
+    result = query.all()
+
+    quarterly_data = [0, 0, 0, 0]
+
+    for r in result:
+        # quarter_number thường trả về 1, 2, 3, 4
+        # Ta gán vào mảng theo chỉ số (index = quý - 1)
+        index = int(r.quarter_number) - 1
+        quarterly_data[index] = float(r.quarterly_revenue)
+
+    return quarterly_data
+
 def get_bill_year():
     query = db.session.query(func.year(Bill.create_date).label('years')).distinct()
     # return query.all()
@@ -196,4 +213,5 @@ def get_model_name(view, context, model, name):
 
 if __name__=="__main__":
     with app.app_context():
-        print(get_lowest_monthly_revenue(2025))
+        print(get_quarterly_revenue(2024))
+        print(get_annual_revenue(2025))
