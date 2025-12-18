@@ -5,11 +5,12 @@ from itertools import groupby
 import pytz
 from dateutil.relativedelta import relativedelta
 from flask import request
-from sqlalchemy import func, literal_column, union_all, select
+from sqlalchemy import func, literal_column, union_all, select, case
 from sqlalchemy.orm import aliased
 
 from EngCenter import db, app
-from EngCenter.models.models import Bill, BillEnum, Student, Teacher, Classroom, Enrollment, Course
+from EngCenter.models.models import Bill, BillEnum, Student, Teacher, Classroom, Enrollment, Course, GradeComponent, \
+    Score, EnrollEnum
 
 
 def format_large_number(number):
@@ -201,6 +202,27 @@ def get_total_classrooms():
     result = query.scalar()
     return result if result is not None else 0
 
+def get_total_passed_student():
+    t = (db.session.query(Course.name,Enrollment.student_id,Enrollment.id,func.sum(GradeComponent.weight*Score.score).label('Score'))
+                .filter((Course.id == GradeComponent.course_id) & (Enrollment.id == Score.enrollment_id)
+                & (Score.grade_id == GradeComponent.id == GradeComponent.student_id) & (Enrollment.status==EnrollEnum.APPROVED))
+                .group_by(Course.name,Enrollment.student_id,Enrollment.id)).subquery()
+
+    query = (db.session.query(t.c.name,func.count(case((t.c.Score>=5,t.c.id))).label('Pass')
+                              ,func.count(case((t.c.Score<5,t.c.id))).label('Fail'))
+             .group_by(t.c.name))
+
+    result = query.all()
+
+    data = [{
+        'course_name' : r.name,
+        'pass':r.Pass,
+        'fail':r.Fail
+    } for r in result
+    ]
+    return data
+
+
 def get_model_name(view, context, model, name):
     model_object = getattr(model, name)
 
@@ -213,5 +235,4 @@ def get_model_name(view, context, model, name):
 
 if __name__=="__main__":
     with app.app_context():
-        print(get_quarterly_revenue(2024))
-        print(get_annual_revenue(2025))
+        print(get_total_passed_student())

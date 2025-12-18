@@ -11,53 +11,60 @@
     <p></p>
 </div>
 <div class="content-body">
+    {%for t in total_passed_students%}
     <div>
-        <div class="ccr-chart">
-            <canvas id="pieChart3"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <div class="content-cell">
+            <div class="ccr-chart">
+                <canvas id="pieChart{{loop.index}}"></canvas>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            <script>
-                const ctx3 = document.getElementById('pieChart3');
+                <script>
+                    const ctx{{loop.index}} = document.getElementById('pieChart{{loop.index}}');
 
-                const labels3 = ['Quý 1', 'Quý 2', 'Quý 3', 'Quý 4'];
+                    const labels{{loop.index}} = ['Đậu','Rớt'];
 
-                const data3 = {{quarterly_revenue | tojson}}
+                    const datas{{loop.index}} = [{{t.pass}},{{t.fail}}]
 
-                new Chart(ctx3, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels3,
-                        datasets: [{
-                            label: 'Tổng doanh thu quý (VNĐ)',
-                            data: data3,
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                    new Chart(ctx{{loop.index}}, {
+                        type: 'pie',
+                        data: {
+                            labels: labels{{loop.index}},
+                            datasets: [{
+                                label: 'người',
+                                data: datas{{loop.index}},
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
                             }
                         }
-                    }
-                });
-            </script>
+                    });
+                </script>
+            </div>
+            <div class="ccr-info">
+
+                <p>{{t.course_name}}</p>
+                <div>
+                    <span>Tổng số học sinh đăng ký: </span>
+                    <span>{{t.pass+t.fail}}</span>
+                </div>
+                <div>
+                    <span>Số học sinh đạt: </span>
+                    <span>{{t.pass}}</span>
+                </div>
+                <div>
+                    <span>Số học sinh rớt: </span>
+                    <span>{{t.fail}}</span>
+                </div>
+
+            </div>
         </div>
-        <div class="ccr-info">
-            <p>Tên khoá học</p>
-            <div>
-                <span>Tổng số học sinh đăng ký: </span>
-                <span>2000</span>
-            </div>
-            <div>
-                <span>Số học sinh đạt: </span>
-                <span>50</span>
-            </div>
-            <div>
-                <span>Số học sinh rớt: </span>
-                <span>20</span>
-            </div>
-        </div>
+
     </div>
+    {%endfor%}
 </div>
 {%endblock%}

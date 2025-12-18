@@ -76,8 +76,10 @@ class MyAdminIndexView(AdminIndexView):
 
         total_students = admin_services.get_total_students()
         quarterly_revenue=admin_services.get_quarterly_revenue(selected_year)
+        total_passed_students = admin_services.get_total_passed_student()
 
-        return self.render("/admin/ccr.html",total_students = total_students, quarterly_revenue=quarterly_revenue)
+        return self.render("/admin/ccr.html",total_students = total_students, quarterly_revenue=quarterly_revenue
+                           ,total_passed_students=total_passed_students)
 
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
