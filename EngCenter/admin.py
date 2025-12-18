@@ -12,7 +12,7 @@ from werkzeug.debug import console
 
 from EngCenter import db, app, services
 from EngCenter.services import admin_services
-from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum
+from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum, TeachingLog
 from EngCenter.services.admin_services import get_model_name, get_data_table
 from EngCenter.templates import admin
 
@@ -128,7 +128,19 @@ class ClassView(SharedView):
         'teacher': get_model_name
     }
 
+class TeachingLogView(ModelView):
+    # Ghi đè phương thức get_query để thêm bộ lọc mặc định
+    def get_query(self):
+        # Chỉ lấy các bản ghi có status là PENDING
+        return super(TeachingLogView, self).get_query().filter(
+            self.model.status == 'PENDING' # Hoặc EnrollEnum.PENDING tùy cấu hình model
+        )
 
+    # Đừng quên ghi đè cả get_count_query để con số tổng (List 18) khớp với dữ liệu lọc
+    def get_count_query(self):
+        return super(TeachingLogView, self).get_count_query().filter(
+            self.model.status == 'PENDING'
+        )
 
 admin = Admin(app=app, theme=Bootstrap4Theme(),index_view=MyAdminIndexView())
 
@@ -137,4 +149,5 @@ category_QLDuLieu= 'Quản lý dữ liệu'
 admin.add_view(CourseView(Course, db.session,category=category_QLDuLieu,name="Khoá học"))
 admin.add_view(UserView(User, db.session,category=category_QLDuLieu,name="Tài khoản"))
 admin.add_view(ClassView(Classroom,db.session,category=category_QLDuLieu,name="Lớp học"))
+admin.add_view(TeachingLogView(TeachingLog,db.session,category=category_QLDuLieu,name="Chấm công"))
 
