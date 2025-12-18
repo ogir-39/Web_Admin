@@ -50,3 +50,7 @@ div.form-inline {
     box-sizing: border-box;
     height: 2rem;
 }
+
+tbody tr:hover {
+    background-color: #87acf0f5 !important;
+}

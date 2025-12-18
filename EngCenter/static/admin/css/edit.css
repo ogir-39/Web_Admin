@@ -58,3 +58,7 @@ label {
 hr {
     display: none;
 }
+
+.admin-form .form-group:nth-last-of-type(2) {
+    padding-bottom: 2rem;
+}

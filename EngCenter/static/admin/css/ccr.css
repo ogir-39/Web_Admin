@@ -1,12 +1,17 @@
 .content-body {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
+    align-items: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .content-body > div {
-    width: 25%;
+    min-width: 25%;
     box-sizing: border-box;
     padding: 1rem;
+    height: auto;
+    /*min-width: 240px;*/
+    flex: 1;
 }
 
 .content-cell {
@@ -14,6 +19,7 @@
     border: 1px solid lightgray;
     border-radius: 1rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
 }
 
 .content-cell:hover{

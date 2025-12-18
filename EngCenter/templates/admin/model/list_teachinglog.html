@@ -1,0 +1,12 @@
+{% extends 'admin/model/list.html' %}
+
+
+{# CHỈ dùng block model_menu_bar_before_filters để chèn nút vào thanh menu hiện có #}
+{% block model_menu_bar_before_filters %}
+    {{ super() }}
+    <li class="nav-item">
+        <button type="button" class="btn-log">
+            Xác nhận
+        </button>
+    </li>
+{% endblock %}

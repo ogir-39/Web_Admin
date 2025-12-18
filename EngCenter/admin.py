@@ -12,7 +12,7 @@ from werkzeug.debug import console
 
 from EngCenter import db, app, services
 from EngCenter.services import admin_services
-from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum, TeachingLog
+from EngCenter.models.models import Course, User, Bill, Enrollment, Classroom, BillEnum, TeachingLog, ScheduleDetail
 from EngCenter.services.admin_services import get_model_name, get_data_table
 from EngCenter.templates import admin
 
@@ -81,6 +81,7 @@ class MyAdminIndexView(AdminIndexView):
         return self.render("/admin/ccr.html",total_students = total_students, quarterly_revenue=quarterly_revenue
                            ,total_passed_students=total_passed_students)
 
+
 class SharedView(ModelView):
     list_template = 'admin/model/list.html'
     create_template = 'admin/model/create.html'
@@ -128,7 +129,27 @@ class ClassView(SharedView):
         'teacher': get_model_name
     }
 
+
 class TeachingLogView(ModelView):
+    list_template = 'admin/model/list_teachinglog.html'
+    column_list = ['teacher','teacher_id','classroom','check_in_time','teaching_date','duration_hour','hour_rate_snapshot','status','admin_note']
+    column_searchable_list = ['teacher_id']
+    column_labels = {
+        'teacher' : 'Giáo viên',
+        'classroom' : 'Lớp học',
+        'check_in_time' : 'Thời gian chấm công',
+        'teaching_date' : 'Ngày dạy',
+        'duration_hour' : 'Duration Hour',
+        'hour_rate_snapshot' : 'Hour Rate Snapshot',
+        'status' : 'Trạng thái',
+        'admin_note' : 'Ghi chú'
+    }
+
+    column_formatters = {
+        'classroom': get_model_name,
+        'teacher': get_model_name
+    }
+
     # Ghi đè phương thức get_query để thêm bộ lọc mặc định
     def get_query(self):
         # Chỉ lấy các bản ghi có status là PENDING
@@ -141,6 +162,8 @@ class TeachingLogView(ModelView):
         return super(TeachingLogView, self).get_count_query().filter(
             self.model.status == 'PENDING'
         )
+
+
 
 admin = Admin(app=app, theme=Bootstrap4Theme(),index_view=MyAdminIndexView())
 

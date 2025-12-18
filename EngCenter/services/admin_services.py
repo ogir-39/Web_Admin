@@ -208,8 +208,8 @@ def get_total_passed_student():
                 & (Score.grade_id == GradeComponent.id == GradeComponent.student_id) & (Enrollment.status==EnrollEnum.APPROVED))
                 .group_by(Course.name,Enrollment.student_id,Enrollment.id)).subquery()
 
-    query = (db.session.query(t.c.name,func.count(case((t.c.Score>=5,t.c.id))).label('Pass')
-                              ,func.count(case((t.c.Score<5,t.c.id))).label('Fail'))
+    query = (db.session.query(t.c.name,func.count(case((t.c.Score>=8,t.c.id))).label('Pass')
+                              ,func.count(case((t.c.Score<8,t.c.id))).label('Fail'))
              .group_by(t.c.name))
 
     result = query.all()
