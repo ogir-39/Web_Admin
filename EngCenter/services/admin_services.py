@@ -69,8 +69,7 @@ def get_monthly_revenue(selected_month):
             Bill.create_date < start_of_next_month
         )
     )
-    print(f"Kiểm tra phạm vi truy vấn (UTC): Từ {start_of_month} đến {start_of_next_month}")
-    print(query)
+
     result = query.scalar()
     return result if result is not None else 0
 
@@ -235,4 +234,4 @@ def get_model_name(view, context, model, name):
 
 if __name__=="__main__":
     with app.app_context():
-        print(get_total_passed_student())
+        print("")

@@ -7,6 +7,7 @@ from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.menu import MenuLink
 from flask_admin.theme import Bootstrap4Theme
 from flask_login import current_user, logout_user
+from pip._internal.utils._jaraco_text import _
 from sqlalchemy import func
 from werkzeug.debug import console
 
@@ -83,6 +84,7 @@ class MyAdminIndexView(AdminIndexView):
 
 
 class SharedView(ModelView):
+
     list_template = 'admin/model/list.html'
     create_template = 'admin/model/create.html'
     edit_template = 'admin/model/edit.html'

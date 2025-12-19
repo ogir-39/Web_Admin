@@ -19,6 +19,10 @@ p, li, a {
     font-size: 15px;
 }
 
+button:focus, input:focus {
+    outline: none;
+}
+
 /*BRAND*/
 .brand-logo-container a{
     display: flex;
@@ -212,6 +216,9 @@ form.form-control {
     margin-bottom: 0.5rem;
 }
 
+.content-main .table-responsive {
+    width: 100%;
+}
 
 /*CONTENT statistic*/
 .statistic {
@@ -567,9 +574,21 @@ form.form-control {
 
 /**/
 
+@media (max-width: 1180px) {
+    .content-body {
+        display: block;
+    }
+    .my-chart {
+        min-width: 540px;
+    }
+
+    .content-body > div {
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 992px) {
     .side-bar {
-        max-width: auto !important;
         min-width: auto;
     }
 
@@ -577,15 +596,26 @@ form.form-control {
         display: block;
     }
 
+
     .other > div {
         width: 100% !important;
         margin: 0;
         margin-top: 1rem;
     }
 
+    .table-responsive {
+        min-width: 780px;
+    }
+
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 920px) {
+    .statistic > div {
+        flex:1;
+    }
+}
+
+@media screen and (max-width: 580px) {
     .access > div {
         display: block;
     }
@@ -593,4 +623,12 @@ form.form-control {
     .access > div > div {
         width: 100%;
     }
+
+    .side-bar{
+        display: none;
+    }
+
+    .fa-list-ul {
+    display: block;
+}
 }

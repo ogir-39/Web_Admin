@@ -11,8 +11,16 @@
     <p></p>
 </div>
 <div class="content-body">
-    {%for t in total_passed_students%}
-    <div>
+    <div class="ccr-search">
+        <div>
+            <input type="text" placeholder="Nhập từ khoá">
+            <button><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="ccr-main">
+        {%for t in total_passed_students%}
+        <div>
         <div class="content-cell">
             <div class="ccr-chart">
                 <canvas id="pieChart{{loop.index}}"></canvas>
@@ -46,7 +54,6 @@
                 </script>
             </div>
             <div class="ccr-info">
-
                 <p>{{t.course_name}}</p>
                 <div>
                     <span>Tổng số học sinh đăng ký: </span>
@@ -63,8 +70,9 @@
 
             </div>
         </div>
-
+        </div>
+        {%endfor%}
     </div>
-    {%endfor%}
+
 </div>
 {%endblock%}

@@ -52,14 +52,21 @@
             {{ model_layout.search_form() }}
         </li>
         {% endif %}
-        {% block model_menu_bar_after_filters %}{% endblock %}
+        {% block model_menu_bar_after_filters %}
+
+
+
+        {% endblock %}
     </ul>
     {% endblock %}
+
+    {%block button%}{%endblock%}
 
     {% if filters %}
         {{ model_layout.filter_form() }}
         <div class="clearfix"></div>
     {% endif %}
+
 
     {% block model_list_table %}
     <div class="table-responsive">

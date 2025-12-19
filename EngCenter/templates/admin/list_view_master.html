@@ -6,16 +6,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/list_teachinglog.css') }}">
 {% endblock %}
 
-{% block content_main %}
-    {# 1. Thẻ DIV bọc tùy chỉnh của bạn #}
-    <div class="custom-card-wrapper">
-        {# 2. Định nghĩa một khối mới (hook) để template con sẽ ghi đè #}
-        {% block custom_list_content %}
-            {# Khối này sẽ chứa nội dung List View #}
-        {% endblock %}
-    </div>
-{% endblock %}
-
 {# Bạn vẫn có thể giữ lại các blocks khác nếu cần #}
 {% block page_scripts %}
     {{ super() }}
