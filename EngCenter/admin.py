@@ -112,7 +112,7 @@ class CourseView(SharedView):
 
 class UserView(SharedView):
     column_list = ['id','name','email','gender','phone_number','dob','address','status','type']
-    form_columns = ['id','name','email','gender','phone_number','dob','address','status','type']
+    form_columns = ['id','name','username','password','email','gender','phone_number','dob','address','status','type']
     column_searchable_list = ['id','name','email','gender','phone_number','dob','address','status','type']
     column_labels = {
         'id' : 'ID',
@@ -122,7 +122,8 @@ class UserView(SharedView):
         'dob' : 'Ngày sinh',
         'address' : 'Địa chỉ',
         'status' : 'Trạng thái',
-        'type' : 'Vai trò'
+        'type' : 'Vai trò',
+        'password' : 'Mật khẩu'
     }
 
 class ClassView(SharedView):
@@ -143,7 +144,7 @@ class ClassView(SharedView):
     }
 
 
-class TeachingLogView(ModelView):
+class TeachingLogView(SharedView):
     list_template = 'admin/model/list_teachinglog.html'
     column_list = ['teacher','teacher_id','classroom','check_in_time','teaching_date','duration_hour','hour_rate_snapshot','status','admin_note']
     column_searchable_list = ['teacher_id']

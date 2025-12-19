@@ -47,6 +47,10 @@
     </ul>
 {% endblock %}
 
+{% block tail_js %}
+    {{ super() }}
+{% endblock %}
+
 {% block tail %}
     {{super()}}
     <script src="{{ url_for('static', filename='/admin/js/admin_home.js') }}"></script>

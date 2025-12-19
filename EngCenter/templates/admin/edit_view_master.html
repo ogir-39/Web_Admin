@@ -5,8 +5,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/edit.css') }}">
 {% endblock %}
 
-
 {# Bạn vẫn có thể giữ lại các blocks khác nếu cần #}
 {% block page_scripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block tail_js %}
+    {{ super() }}
+{% endblock %}
+
+{% block tail %}
     {{ super() }}
 {% endblock %}
