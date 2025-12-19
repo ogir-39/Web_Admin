@@ -84,7 +84,12 @@ class MyAdminIndexView(AdminIndexView):
 
 
 class SharedView(ModelView):
-    can_delete = True; 
+    can_delete = True
+    action_disallowed_list = []
+
+
+
+    column_display_pk = True
 
     list_template = 'admin/model/list.html'
     create_template = 'admin/model/create.html'
@@ -93,8 +98,9 @@ class SharedView(ModelView):
     extra_css = ['/static/admin/css/model_view.css']
 
 class CourseView(SharedView):
-    column_searchable_list = ['name','age','level']
+    column_searchable_list = ['id','name','age','level']
     column_labels = {
+        'id':'ID',
         'name': 'Tên khoá học',
         'fee' : 'Học phí',
         'age' : 'Độ tuổi',
@@ -102,11 +108,14 @@ class CourseView(SharedView):
         'duration_hour' : 'Thời gian',
         'course_description': 'Mô tả khoá học'
     }
+    form_columns = ['id', 'name', 'fee', 'age', 'level','duration_hour', 'course_description']
 
 class UserView(SharedView):
-    column_list = ['name','email','gender','phone_number','dob','address','status','type']
-    column_searchable_list = ['name','email','gender','phone_number','dob','address','status','type']
+    column_list = ['id','name','email','gender','phone_number','dob','address','status','type']
+    form_columns = ['id','name','email','gender','phone_number','dob','address','status','type']
+    column_searchable_list = ['id','name','email','gender','phone_number','dob','address','status','type']
     column_labels = {
+        'id' : 'ID',
         'name' : 'Họ tên',
         'gender' : 'Giới tính',
         'phone_number' : 'Số điện thoại',
@@ -117,7 +126,8 @@ class UserView(SharedView):
     }
 
 class ClassView(SharedView):
-    column_list = ['name','course','teacher','start_date','end_date','max_student']
+    column_list = ['id','name','course','teacher','start_date','end_date','max_student']
+    form_columns = ['id','name','course','teacher','start_date','end_date','max_student']
     column_searchable_list = ['name','start_date','end_date','max_student']
     column_labels = {
         'name' : 'Tên lớp học',

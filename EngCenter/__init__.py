@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@localhost/engdb?charset=utf8mb4"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+app.config['SECRET_KEY'] = 'your-very-secret-key-here'
 db = SQLAlchemy(app)
 
 from EngCenter.services.admin_services import format_large_number
