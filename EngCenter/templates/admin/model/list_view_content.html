@@ -6,7 +6,7 @@
 
 
 
-{% block body %}
+
     {% block model_menu_bar %}
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -181,5 +181,7 @@
     {%- if admin_view.edit_modal or admin_view.create_modal or admin_view.details_modal -%}
         {{ lib.add_modal_window() }}
     {%- endif -%}
-{% endblock %}
+
+
+
 

@@ -1,5 +1,9 @@
 {% extends 'admin/list_view_master.html' %}
 
 {% block content_main %}
-        {% include 'admin/model/list_view_content.html' %}
+    {% include 'admin/model/list_view_content.html' %}
+{% endblock %}
+
+{% block tail %}
+    {{ super() }}
 {% endblock %}

@@ -1,8 +1,10 @@
 {%extends 'admin/base.html'%}
+{% import 'admin/static.html' as admin_static with context %}
 
 {% block head %}
     {{ super() }}
-
+    <script src="{{ admin_static.url(filename='vendor/jquery.min.js', v='3.5.1') }}" type="text/javascript"></script>
+    <script src="{{ admin_static.url(filename='admin/js/helpers.js', v='1.0.0') }}" type="text/javascript"></script>
     <!-- XÓA Bootstrap gốc nếu muốn -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
 
@@ -47,11 +49,7 @@
     </ul>
 {% endblock %}
 
-{% block tail_js %}
-    {{ super() }}
-{% endblock %}
 
 {% block tail %}
     {{super()}}
-    <script src="{{ url_for('static', filename='/admin/js/admin_home.js') }}"></script>
 {% endblock %}
