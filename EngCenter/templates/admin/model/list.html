@@ -6,4 +6,17 @@
 
 {% block tail %}
     {{ super() }}
+
+    {% if actions %}
+    <script src="{{ admin_static.url(filename='admin/js/actions.js', v='1.0.0') }}"></script>
+
+    <script language="javascript">
+        var modelActions = new AdminModelActions(
+            '#admin_action_form',
+            'rowid',   'Vui lòng chọn ít nhất một bản ghi.',
+            'Bạn có chắc chắn muốn thực hiện hành động này?',
+            'Bạn chưa chọn bản ghi nào. Vui lòng chọn ít nhất một bản ghi để tiếp tục.'
+        );
+    </script>
+    {% endif %}
 {% endblock %}
