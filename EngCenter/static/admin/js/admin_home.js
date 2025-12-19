@@ -26,4 +26,15 @@ $(document).ready(function() {
         input.placeholder = "Nhập từ khoá";
     });
 
+    // const btnClose = document.querySelector('#btnClose');
+    // btnClose.addEventListener('click', function () {
+    //     if ($('.sidebar').style.display === 'none') {
+    //         $('.sidebar').style.display === 'block';
+    //     }
+    //     else {
+    //         $('.sidebar').style.display === 'none';
+    //     }
+    // });
+
+
 });

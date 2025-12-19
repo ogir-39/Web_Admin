@@ -43,7 +43,8 @@
                 </div>
             <!-- Brand and toggle get grouped for better mobile display -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#admin-navbar-collapse"
-                        aria-controls="admin-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="admin-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"
+                        id="btnClose">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- navbar content -->
@@ -72,9 +73,9 @@
         <div class="content flex-grow-1">
             {%block content_navbar%}
                 <div class="navbar">
-                    <ul class="navbar-content">
+                    <ul class="navbar-content navbar-btn">
                         <li>
-                            <a class="nav-link" href="#"><i class="fa fa-list-ul"></i></a>
+                            <button id="btnOpen" href="#"><i class="fa fa-list-ul"></i></button>
                         </li>
                     </ul>
                     <ul class="navbar-content d-flex ml-auto">

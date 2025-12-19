@@ -84,6 +84,7 @@ class MyAdminIndexView(AdminIndexView):
 
 
 class SharedView(ModelView):
+    can_delete = True; 
 
     list_template = 'admin/model/list.html'
     create_template = 'admin/model/create.html'

@@ -172,6 +172,14 @@ button:focus, input:focus {
     padding: 0;
 }
 
+.navbar-content #btnOpen {
+    color: white;
+    background-color: transparent;
+    border: 0;
+}
+
+
+
 .nav-item {
     padding: 0;
 }
@@ -182,7 +190,7 @@ button:focus, input:focus {
 }
 
 .fa-list-ul {
-    display: none;
+    display: block;
 }
 
 .navbar .nav-link:hover {
@@ -578,13 +586,23 @@ form.form-control {
     .content-body {
         display: block;
     }
-    .my-chart {
-        min-width: 540px;
-    }
 
     .content-body > div {
-        width: 100%;
+        min-width: 560px;
+        flex-grow: 1;
     }
+
+    .access > div >div{
+        display: flex;
+        flex-grow: 1;
+    }
+
+
+}
+
+@media (max-width: 1024px) {
+
+
 }
 
 @media screen and (max-width: 992px) {
@@ -613,22 +631,20 @@ form.form-control {
     .statistic > div {
         flex:1;
     }
+
+    .btn-nav {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 580px) {
     .access > div {
-        display: block;
+        display: flex;
+        flex-grow: 0;
     }
 
     .access > div > div {
         width: 100%;
     }
 
-    .side-bar{
-        display: none;
-    }
-
-    .fa-list-ul {
-    display: block;
-}
 }

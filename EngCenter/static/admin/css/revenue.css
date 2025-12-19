@@ -137,6 +137,10 @@ select {
     left: 0;
 }
 
+#barChart {
+    width: 100% !important;
+}
+
 .my-chart > div {
     /*width: 100% !important;*/
     position: relative;

@@ -11,6 +11,11 @@
     border: 1px solid lightgray;
 }
 
+.nav-tabs .nav-link:hover {
+    border-color: var(--xanhduong);
+    border-bottom: 0;
+}
+
 .nav-tabs .nav-link:active {
     border: 1px solid lightgray;
 }
